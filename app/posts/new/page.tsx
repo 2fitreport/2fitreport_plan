@@ -1,12 +1,12 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import styles from './page.module.css';
 import { supabase } from '@/lib/supabase';
 import ConfirmModal from '@/app/components/ConfirmModal';
 
-export default function NewPost() {
+function NewPostForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const isMeeting = searchParams.get('type') === 'meeting';
@@ -216,5 +216,13 @@ export default function NewPost() {
         onCancel={() => setModalOpen(false)}
       />
     </div>
+  );
+}
+
+export default function NewPost() {
+  return (
+    <Suspense fallback={<div>로딩 중...</div>}>
+      <NewPostForm />
+    </Suspense>
   );
 }

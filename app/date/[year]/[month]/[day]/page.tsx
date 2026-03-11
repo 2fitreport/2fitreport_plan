@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import styles from './page.module.css';
@@ -20,7 +20,7 @@ interface Post {
   comment_count?: number;
 }
 
-export default function DatePostsPage() {
+function DatePostsContent() {
   const params = useParams();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -182,5 +182,13 @@ export default function DatePostsPage() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function DatePostsPage() {
+  return (
+    <Suspense fallback={<div>로딩 중...</div>}>
+      <DatePostsContent />
+    </Suspense>
   );
 }

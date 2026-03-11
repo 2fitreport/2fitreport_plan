@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import Link from 'next/link';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import styles from './page.module.css';
@@ -156,7 +156,7 @@ const DUMMY_POSTS: Record<string, PostData> = {
   },
 };
 
-export default function PostDetail() {
+function PostDetailContent() {
   const params = useParams();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -636,5 +636,13 @@ export default function PostDetail() {
         />
       )}
     </div>
+  );
+}
+
+export default function PostDetail() {
+  return (
+    <Suspense fallback={<div>로딩 중...</div>}>
+      <PostDetailContent />
+    </Suspense>
   );
 }

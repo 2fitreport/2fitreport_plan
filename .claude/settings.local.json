@@ -13,7 +13,9 @@
       "Bash(cd /C/Users/양태현/Desktop/test/plan && npm install)",
       "Bash(cd /C/Users/양태현/Desktop/test/plan && npm run build)",
       "Bash(npm run:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(grep -n \"^export default function\" C:/Users/양태현/Desktop/test/plan/app/posts/\\\\[id\\\\]/page.tsx)",
+      "Bash(wc -l C:/Users/양태현/Desktop/test/plan/app/posts/\\\\[id\\\\]/page.tsx)"
     ]
   },
   "enableAllProjectMcpServers": false
