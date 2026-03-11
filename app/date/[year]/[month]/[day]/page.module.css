@@ -1,0 +1,247 @@
+.container {
+  min-height: 100vh;
+  background-color: #f8f9fa;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.backButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  margin-bottom: 24px;
+  background: white;
+  border: 1px solid #e5e5e5;
+  border-radius: 6px;
+  color: #5b6dea;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  width: 100%;
+  max-width: none;
+  justify-content: flex-start;
+}
+
+.backButton:hover {
+  border-color: #d4d4d8;
+  background-color: #f8f8f8;
+}
+
+.content {
+  width: 100%;
+  height: calc(100vh - 104px);
+  background: white;
+  border-radius: 12px;
+  padding: 28px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-bottom: 0;
+  border-bottom: none;
+  flex-shrink: 0;
+}
+
+.title {
+  margin: 0 0 16px 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: #37352f;
+  letter-spacing: -0.02em;
+}
+
+.createButton {
+  background-color: #5b6dea;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.15s ease;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.createButton:hover {
+  background-color: #4a5ccf;
+}
+
+.loadingState,
+.emptyState {
+  text-align: center;
+  padding: 60px 20px;
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.emptyText {
+  margin: 0;
+  font-size: 16px;
+  color: #6f6e77;
+  font-weight: 500;
+}
+
+.postsTable {
+  width: 100%;
+  background: transparent;
+  border-collapse: collapse;
+  border-radius: 0;
+  box-shadow: none;
+  overflow: visible;
+}
+
+.postsTable thead {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.postsTable th {
+  padding: 16px;
+  text-align: left;
+  font-size: 13px;
+  font-weight: 600;
+  color: #37352f;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.titleCol {
+  width: 55%;
+}
+
+.statusCol {
+  width: 15%;
+}
+
+.commentCol {
+  width: 10%;
+}
+
+.dateCol {
+  width: 20%;
+}
+
+.tableRow {
+  border-bottom: 1px solid #e5e5e5;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.tableRow:last-child {
+  border-bottom: none;
+}
+
+.tableRow:hover {
+  background-color: #f8f8f8;
+}
+
+.postsTable td {
+  padding: 16px;
+  font-size: 14px;
+  color: #37352f;
+}
+
+.titleCell {
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.statusCell {
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.statusCell.statusPending {
+  background-color: #dbeafe;
+  color: #1d4ed8;
+}
+
+.statusCell.statusReview {
+  background-color: #fef3c7;
+  color: #d97706;
+}
+
+.statusCell.statusDone {
+  background-color: #dcfce7;
+  color: #15803d;
+}
+
+.statusCell.statusHold {
+  background-color: #fecaca;
+  color: #991b1b;
+}
+
+.commentCountCell {
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  color: #5b6dea;
+}
+
+.dateCell {
+  color: #6f6e77;
+  font-size: 13px;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 20px;
+  }
+
+  .title {
+    font-size: 24px;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .createButton {
+    width: 100%;
+    text-align: center;
+  }
+
+  .titleCol {
+    width: 60%;
+  }
+
+  .commentCol {
+    width: 10%;
+  }
+
+  .dateCol {
+    width: 30%;
+  }
+
+  .postsTable th,
+  .postsTable td {
+    padding: 12px;
+    font-size: 12px;
+  }
+
+  .dateCell {
+    font-size: 12px;
+  }
+}

@@ -1,0 +1,26 @@
+.container {
+  background-color: #f8f9fa;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.calendarWrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 1024px) {
+  .calendarWrapper {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .calendarWrapper {
+    padding: 12px;
+  }
+}
