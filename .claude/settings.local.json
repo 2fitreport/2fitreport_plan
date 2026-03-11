@@ -11,7 +11,9 @@
       "mcp__supabase__apply_migration",
       "mcp__supabase__execute_sql",
       "Bash(cd /C/Users/양태현/Desktop/test/plan && npm install)",
-      "Bash(cd /C/Users/양태현/Desktop/test/plan && npm run build)"
+      "Bash(cd /C/Users/양태현/Desktop/test/plan && npm run build)",
+      "Bash(npm run:*)",
+      "Bash(git add:*)"
     ]
   },
   "enableAllProjectMcpServers": false

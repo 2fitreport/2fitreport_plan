@@ -11,6 +11,9 @@ interface Post {
   title: string;
   content: string;
   date: string;
+  start_date: string;
+  end_date: string;
+  author: string;
   created_at: string;
   updated_at: string;
   status: string;
@@ -44,14 +47,15 @@ export default function DatePostsPage() {
     });
   };
 
-  // 해당 날짜의 게시물 가져오기
+  // 해당 날짜의 게시물 가져오기 (범위 지원)
   useEffect(() => {
     const fetchPosts = async () => {
       try {
         const { data, error } = await supabase
           .from('posts')
           .select('*')
-          .eq('date', dateString)
+          .lte('start_date', dateString)
+          .gte('end_date', dateString)
           .order('created_at', { ascending: false });
 
         if (error) throw error;
@@ -116,8 +120,8 @@ export default function DatePostsPage() {
               <tr>
                 <th className={styles.titleCol}>제목</th>
                 <th className={styles.statusCol}>상태</th>
+                <th className={styles.authorCol}>작성자</th>
                 <th className={styles.commentCol}>댓글</th>
-                <th className={styles.dateCol}>작성일시</th>
               </tr>
             </thead>
             <tbody>
@@ -145,14 +149,14 @@ export default function DatePostsPage() {
                       {post.status === '완료' ? '완료' : post.status}
                     </div>
                   </td>
+                  <td className={styles.authorCol}>
+                    <div className={styles.authorCell}>
+                      {post.author || '미지정'}
+                    </div>
+                  </td>
                   <td className={styles.commentCol}>
                     <div className={styles.commentCountCell}>
                       {post.comment_count || 0}
-                    </div>
-                  </td>
-                  <td className={styles.dateCol}>
-                    <div className={styles.dateCell}>
-                      {formatDateTime(post.created_at)}
                     </div>
                   </td>
                 </tr>

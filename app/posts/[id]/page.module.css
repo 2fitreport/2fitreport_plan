@@ -100,6 +100,12 @@
   color: #6f6e77;
 }
 
+.author {
+  font-size: 13px;
+  font-weight: 500;
+  color: #6f6e77;
+}
+
 .statusBadge {
   padding: 4px 10px;
   border-radius: 4px;

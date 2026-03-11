@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from './page.module.css';
 import { supabase } from '@/lib/supabase';
@@ -8,15 +8,26 @@ import ConfirmModal from '@/app/components/ConfirmModal';
 
 export default function NewPost() {
   const router = useRouter();
+  const today = new Date().toISOString().split('T')[0];
   const [formData, setFormData] = useState({
     title: '',
-    date: new Date().toISOString().split('T')[0],
+    start_date: today,
+    end_date: '',
+    author: '',
     content: '',
     status: '진행중',
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+
+  useEffect(() => {
+    const savedAuthor = localStorage.getItem('author') || '';
+    setFormData((prev) => ({
+      ...prev,
+      author: savedAuthor,
+    }));
+  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -35,13 +46,21 @@ export default function NewPost() {
     setIsSubmitting(true);
 
     try {
+      // 작성자 localStorage에 저장
+      localStorage.setItem('author', formData.author);
+
+      const endDate = formData.end_date || formData.start_date;
+
       const { data, error } = await supabase
         .from('posts')
         .insert([
           {
             title: formData.title,
             content: formData.content,
-            date: formData.date,
+            date: formData.start_date,
+            start_date: formData.start_date,
+            end_date: endDate,
+            author: formData.author,
             status: formData.status,
           },
         ]);
@@ -89,18 +108,57 @@ export default function NewPost() {
         </div>
 
         <div className={styles.formGroup}>
-          <label htmlFor="date" className={styles.label}>
-            날짜 <span className={styles.required}>*</span>
+          <label htmlFor="author" className={styles.label}>
+            작성자
           </label>
           <input
-            type="date"
-            id="date"
-            name="date"
-            value={formData.date}
+            type="text"
+            id="author"
+            name="author"
+            value={formData.author}
             onChange={handleInputChange}
-            required
+            placeholder="작성자 이름을 입력하세요"
             className={styles.input}
           />
+        </div>
+
+        <div className={styles.dateRange}>
+          <div className={styles.formGroup} style={{ flex: 1 }}>
+            <label htmlFor="start_date" className={styles.label}>
+              시작일 <span className={styles.required}>*</span>
+            </label>
+            <input
+              type="date"
+              id="start_date"
+              name="start_date"
+              value={formData.start_date}
+              onChange={handleInputChange}
+              required
+              className={styles.input}
+            />
+          </div>
+
+          <div style={{ padding: '0 8px', display: 'flex', alignItems: 'flex-end', marginBottom: '0' }}>
+            ~
+          </div>
+
+          <div className={styles.formGroup} style={{ flex: 1 }}>
+            <label htmlFor="end_date" className={styles.label}>
+              종료일
+            </label>
+            <input
+              type="date"
+              id="end_date"
+              name="end_date"
+              value={formData.end_date}
+              onChange={handleInputChange}
+              placeholder="선택 사항"
+              className={styles.input}
+            />
+            <p className={styles.hint}>
+              종료일을 지정하지 않으면 시작일과 같습니다.
+            </p>
+          </div>
         </div>
 
         <div className={styles.formGroup}>
@@ -146,7 +204,9 @@ export default function NewPost() {
         message={`다음 내용으로 일정을 등록하시겠습니까?
 
 제목: ${formData.title}
-날짜: ${formData.date}`}
+작성자: ${formData.author || '미지정'}
+시작일: ${formData.start_date}
+종료일: ${formData.end_date || formData.start_date}`}
         confirmText="등록"
         cancelText="취소"
         onConfirm={handleConfirmSubmit}

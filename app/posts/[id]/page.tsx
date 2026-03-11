@@ -13,6 +13,9 @@ interface PostData {
   title: string;
   content: string;
   date: string;
+  start_date: string;
+  end_date: string;
+  author: string;
   created_at: string;
   updated_at: string;
   status: string;
@@ -31,6 +34,9 @@ const DUMMY_POSTS: Record<string, PostData> = {
     id: '1',
     title: '영업 현황 보고',
     date: '2025-03-11',
+    start_date: '2025-03-11',
+    end_date: '2025-03-11',
+    author: '',
     status: '진행중',
     content: `오늘의 영업 현황을 정리했습니다.
 
@@ -55,6 +61,9 @@ const DUMMY_POSTS: Record<string, PostData> = {
     id: '2',
     title: '3월 매출 분석',
     date: '2025-03-11',
+    start_date: '2025-03-11',
+    end_date: '2025-03-11',
+    author: '',
     status: '검수',
     content: `3월 중순 매출 분석 결과: 전월 대비 15% 증가
 
@@ -80,6 +89,9 @@ const DUMMY_POSTS: Record<string, PostData> = {
     id: '3',
     title: '고객 미팅 기록',
     date: '2025-03-11',
+    start_date: '2025-03-11',
+    end_date: '2025-03-11',
+    author: '',
     status: '완료',
     content: `A사 담당자와 협력 방안에 대해 논의했습니다.
 
@@ -104,6 +116,9 @@ const DUMMY_POSTS: Record<string, PostData> = {
     id: '4',
     title: '새 프로젝트 킥오프',
     date: '2025-03-10',
+    start_date: '2025-03-10',
+    end_date: '2025-03-10',
+    author: '',
     status: '진행중',
     content: `새로운 프로젝트의 킥오프 미팅이 성공적으로 진행되었습니다.
 
@@ -131,6 +146,9 @@ const DUMMY_POSTS: Record<string, PostData> = {
     id: '5',
     title: '마케팅 전략 회의',
     date: '2025-03-11',
+    start_date: '2025-03-11',
+    end_date: '2025-03-11',
+    author: '',
     status: '보류',
     content: `마케팅 팀과 전략 회의 예정\n\n주요 안건:\n- Q2 마케팅 전략\n- 소셜 미디어 캠페인\n- 광고 예산 배분\n\n검토 중...`,
     created_at: new Date(2025, 2, 11, 15, 30).toISOString(),
@@ -305,17 +323,24 @@ export default function PostDetail() {
 
   const handleEditSave = async (
     newTitle: string,
-    newDate: string,
+    newStartDate: string,
+    newEndDate: string,
+    newAuthor: string,
     newContent: string
   ) => {
     if (!post) return;
+
+    const endDate = newEndDate || newStartDate;
 
     try {
       const { error } = await supabase
         .from('posts')
         .update({
           title: newTitle,
-          date: newDate,
+          start_date: newStartDate,
+          end_date: endDate,
+          author: newAuthor,
+          date: newStartDate,
           content: newContent,
         })
         .eq('id', postId);
@@ -324,7 +349,10 @@ export default function PostDetail() {
       setPost({
         ...post,
         title: newTitle,
-        date: newDate,
+        date: newStartDate,
+        start_date: newStartDate,
+        end_date: endDate,
+        author: newAuthor,
         content: newContent,
       });
       setEditModalOpen(false);
@@ -402,7 +430,17 @@ export default function PostDetail() {
           <div className={styles.meta}>
             <span className={styles.date}>{formatDate(post.created_at)}</span>
             <span className={styles.separator}>•</span>
-            <span className={styles.dateLabel}>{post.date}</span>
+            <span className={styles.dateLabel}>
+              {post.start_date === post.end_date
+                ? post.start_date
+                : `${post.start_date} ~ ${post.end_date}`}
+            </span>
+            {post.author && (
+              <>
+                <span className={styles.separator}>•</span>
+                <span className={styles.author}>{post.author}</span>
+              </>
+            )}
             <span className={styles.separator}>•</span>
             <span
               className={`${styles.statusBadge} ${
@@ -553,7 +591,9 @@ export default function PostDetail() {
       <EditModal
         isOpen={editModalOpen}
         title={post.title}
-        date={post.date}
+        startDate={post.start_date}
+        endDate={post.end_date}
+        author={post.author}
         content={post.content}
         onSave={handleEditSave}
         onCancel={() => setEditModalOpen(false)}

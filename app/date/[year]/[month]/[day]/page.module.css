@@ -121,18 +121,18 @@
 }
 
 .titleCol {
-  width: 55%;
+  width: 50%;
 }
 
 .statusCol {
   width: 15%;
 }
 
-.commentCol {
-  width: 10%;
+.authorCol {
+  width: 15%;
 }
 
-.dateCol {
+.commentCol {
   width: 20%;
 }
 
@@ -191,16 +191,16 @@
   color: #991b1b;
 }
 
+.authorCell {
+  color: #6f6e77;
+  font-size: 14px;
+}
+
 .commentCountCell {
   text-align: center;
   font-size: 14px;
   font-weight: 600;
   color: #5b6dea;
-}
-
-.dateCell {
-  color: #6f6e77;
-  font-size: 13px;
 }
 
 @media (max-width: 768px) {
@@ -224,15 +224,19 @@
   }
 
   .titleCol {
-    width: 60%;
+    width: 45%;
+  }
+
+  .statusCol {
+    width: 15%;
+  }
+
+  .authorCol {
+    width: 15%;
   }
 
   .commentCol {
-    width: 10%;
-  }
-
-  .dateCol {
-    width: 30%;
+    width: 25%;
   }
 
   .postsTable th,
@@ -241,7 +245,7 @@
     font-size: 12px;
   }
 
-  .dateCell {
+  .authorCell {
     font-size: 12px;
   }
 }

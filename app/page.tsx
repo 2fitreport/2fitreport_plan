@@ -40,16 +40,23 @@ export default function Home() {
     fetchPosts();
   }, []);
 
-  // 게시물 제목과 상태를 날짜별로 분류
+  // 게시물 제목과 상태를 날짜별로 분류 (범위 지원)
   const postsOnDate = posts.reduce(
     (acc, post) => {
-      if (!acc[post.date]) {
-        acc[post.date] = [];
+      const start = new Date(post.start_date || post.date);
+      const end = new Date(post.end_date || post.start_date || post.date);
+
+      // start_date ~ end_date 범위의 모든 날짜에 추가
+      for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
+        const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+        if (!acc[key]) {
+          acc[key] = [];
+        }
+        acc[key].push({
+          title: post.title,
+          status: post.status,
+        });
       }
-      acc[post.date].push({
-        title: post.title,
-        status: post.status,
-      });
       return acc;
     },
     {} as Record<string, Array<{ title: string; status: string }>>

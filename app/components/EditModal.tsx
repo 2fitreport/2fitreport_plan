@@ -6,28 +6,34 @@ import styles from './EditModal.module.css';
 interface EditModalProps {
   isOpen: boolean;
   title: string;
-  date: string;
+  startDate: string;
+  endDate: string;
+  author: string;
   content: string;
-  onSave: (title: string, date: string, content: string) => void;
+  onSave: (title: string, startDate: string, endDate: string, author: string, content: string) => void;
   onCancel: () => void;
 }
 
 export default function EditModal({
   isOpen,
   title: initialTitle,
-  date: initialDate,
+  startDate: initialStartDate,
+  endDate: initialEndDate,
+  author: initialAuthor,
   content: initialContent,
   onSave,
   onCancel,
 }: EditModalProps) {
   const [title, setTitle] = useState(initialTitle);
-  const [date, setDate] = useState(initialDate);
+  const [startDate, setStartDate] = useState(initialStartDate);
+  const [endDate, setEndDate] = useState(initialEndDate);
+  const [author, setAuthor] = useState(initialAuthor);
   const [content, setContent] = useState(initialContent);
 
   if (!isOpen) return null;
 
   const handleSave = () => {
-    onSave(title, date, content);
+    onSave(title, startDate, endDate, author, content);
   };
 
   return (
@@ -57,13 +63,40 @@ export default function EditModal({
           </div>
 
           <div className={styles.formGroup}>
-            <label className={styles.label}>날짜</label>
+            <label className={styles.label}>작성자</label>
             <input
-              type="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
+              type="text"
+              value={author}
+              onChange={(e) => setAuthor(e.target.value)}
               className={styles.input}
+              placeholder="작성자 이름"
             />
+          </div>
+
+          <div className={styles.formRow}>
+            <div className={styles.formGroup} style={{ flex: 1 }}>
+              <label className={styles.label}>시작일</label>
+              <input
+                type="date"
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+                className={styles.input}
+              />
+            </div>
+
+            <div style={{ padding: '0 8px', display: 'flex', alignItems: 'flex-end', marginBottom: '20px' }}>
+              ~
+            </div>
+
+            <div className={styles.formGroup} style={{ flex: 1 }}>
+              <label className={styles.label}>종료일</label>
+              <input
+                type="date"
+                value={endDate}
+                onChange={(e) => setEndDate(e.target.value)}
+                className={styles.input}
+              />
+            </div>
           </div>
 
           <div className={styles.formGroup}>
