@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(claude mcp:*)",
+      "Bash(curl -s -H \"Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRlbnlmb250c2R5aXd4b2ZmbmpkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMyMDUxMDUsImV4cCI6MjA4ODc4MTEwNX0.VE46OdSmehTS-dnFRMCjg3vdaOHZmQ_tFJ0VmhwR6O0\" \"https://mcp.supabase.com/mcp?project_ref=denyfontsdyiwxoffnjd\" 2>&1 | head -100)",
+      "Bash(curl -s -H \"Authorization: Bearer sb_publishable_g4ra4dX90qgrlLJcgW6oEA_uaZHDpM2\" \"https://mcp.supabase.com/mcp?project_ref=denyfontsdyiwxoffnjd\" 2>&1 | head -100)",
+      "Bash(curl -s -H \"apikey: sb_publishable_g4ra4dX90qgrlLJcgW6oEA_uaZHDpM2\" \"https://mcp.supabase.com/mcp?project_ref=denyfontsdyiwxoffnjd\" 2>&1 | head -100)",
+      "Bash(curl -s \"https://mcp.supabase.com\" 2>&1 | head -50)",
+      "Bash(cd C:/Users/양태현/Desktop/test/plan && npm install @supabase/supabase-js)",
+      "mcp__supabase__list_projects",
+      "mcp__supabase__apply_migration",
+      "mcp__supabase__execute_sql",
+      "Bash(cd /C/Users/양태현/Desktop/test/plan && npm install)",
+      "Bash(cd /C/Users/양태현/Desktop/test/plan && npm run build)"
+    ]
+  },
+  "enableAllProjectMcpServers": false
+}

@@ -59,7 +59,7 @@ export default function Home() {
   const statusCounts = {
     진행중: posts.filter((p) => p.status === '진행중').length,
     검수: posts.filter((p) => p.status === '검수').length,
-    검수완료: posts.filter((p) => p.status === '검수완료').length,
+    완료: posts.filter((p) => p.status === '완료').length,
     보류: posts.filter((p) => p.status === '보류').length,
   };
 

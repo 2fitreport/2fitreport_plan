@@ -48,8 +48,8 @@ const DUMMY_POSTS: Record<string, PostData> = {
 - 3월 15일: A사 미팅 (13:00)
 - 3월 17일: B사 프리젠테이션 (10:00)
 - 3월 18일: C사 계약 체결 (15:00)`,
-    createdAt: new Date(2025, 2, 11, 9, 30).toISOString(),
-    updatedAt: new Date(2025, 2, 11, 9, 30).toISOString(),
+    created_at: new Date(2025, 2, 11, 9, 30).toISOString(),
+    updated_at: new Date(2025, 2, 11, 9, 30).toISOString(),
   },
   '2': {
     id: '2',
@@ -73,8 +73,8 @@ const DUMMY_POSTS: Record<string, PostData> = {
 - 온라인 채널 성장세 지속 (+25%)
 - 기업 고객층 확대 중
 - 시즈널 제품 매출 호조`,
-    createdAt: new Date(2025, 2, 11, 10, 15).toISOString(),
-    updatedAt: new Date(2025, 2, 11, 10, 15).toISOString(),
+    created_at: new Date(2025, 2, 11, 10, 15).toISOString(),
+    updated_at: new Date(2025, 2, 11, 10, 15).toISOString(),
   },
   '3': {
     id: '3',
@@ -97,8 +97,8 @@ const DUMMY_POSTS: Record<string, PostData> = {
 - 일시: 3월 15일 오후 3시
 - 장소: A사 서울 지사 3층 회의실
 - 주요 안건: 분기별 성과 검토, Q2 계획 수립`,
-    createdAt: new Date(2025, 2, 11, 14, 0).toISOString(),
-    updatedAt: new Date(2025, 2, 11, 14, 0).toISOString(),
+    created_at: new Date(2025, 2, 11, 14, 0).toISOString(),
+    updated_at: new Date(2025, 2, 11, 14, 0).toISOString(),
   },
   '4': {
     id: '4',
@@ -124,8 +124,8 @@ const DUMMY_POSTS: Record<string, PostData> = {
 - 개발 리드: 박준호
 - 디자인 리드: 이수민
 - QA 리드: 정지훈`,
-    createdAt: new Date(2025, 2, 10, 11, 0).toISOString(),
-    updatedAt: new Date(2025, 2, 10, 11, 0).toISOString(),
+    created_at: new Date(2025, 2, 10, 11, 0).toISOString(),
+    updated_at: new Date(2025, 2, 10, 11, 0).toISOString(),
   },
   '5': {
     id: '5',
@@ -133,8 +133,8 @@ const DUMMY_POSTS: Record<string, PostData> = {
     date: '2025-03-11',
     status: '보류',
     content: `마케팅 팀과 전략 회의 예정\n\n주요 안건:\n- Q2 마케팅 전략\n- 소셜 미디어 캠페인\n- 광고 예산 배분\n\n검토 중...`,
-    createdAt: new Date(2025, 2, 11, 15, 30).toISOString(),
-    updatedAt: new Date(2025, 2, 11, 15, 30).toISOString(),
+    created_at: new Date(2025, 2, 11, 15, 30).toISOString(),
+    updated_at: new Date(2025, 2, 11, 15, 30).toISOString(),
   },
 };
 
