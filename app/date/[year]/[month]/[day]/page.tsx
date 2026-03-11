@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import styles from './page.module.css';
 import { supabase } from '@/lib/supabase';
@@ -23,9 +23,11 @@ interface Post {
 export default function DatePostsPage() {
   const params = useParams();
   const router = useRouter();
+  const searchParams = useSearchParams();
   const year = params?.year as string;
   const month = params?.month as string;
   const day = params?.day as string;
+  const isMeeting = searchParams.get('type') === 'meeting';
 
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
@@ -33,7 +35,9 @@ export default function DatePostsPage() {
   const dateString = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
 
   const formatDateDisplay = (y: string, m: string, d: string) => {
-    return `${y}년 ${m}월 ${d}일`;
+    const dateStr = `${y}년 ${m}월 ${d}일`;
+    const itemType = isMeeting ? '회의' : '일정';
+    return `${dateStr} ${itemType}`;
   };
 
   const formatDateTime = (dateStr: string) => {
@@ -47,12 +51,16 @@ export default function DatePostsPage() {
     });
   };
 
-  // 해당 날짜의 게시물 가져오기 (범위 지원)
+  // 해당 날짜의 게시물/회의 가져오기 (범위 지원)
   useEffect(() => {
     const fetchPosts = async () => {
       try {
+        const table = isMeeting ? 'meetings' : 'posts';
+        const commentTable = isMeeting ? 'meeting_comments' : 'comments';
+        const idField = isMeeting ? 'meeting_id' : 'post_id';
+
         const { data, error } = await supabase
-          .from('posts')
+          .from(table)
           .select('*')
           .lte('start_date', dateString)
           .gte('end_date', dateString)
@@ -60,31 +68,31 @@ export default function DatePostsPage() {
 
         if (error) throw error;
 
-        // 각 게시물의 댓글 개수 가져오기
-        const postsWithCommentCount = await Promise.all(
-          (data || []).map(async (post) => {
+        // 각 항목의 댓글 개수 가져오기
+        const itemsWithCommentCount = await Promise.all(
+          (data || []).map(async (item) => {
             const { count, error: countError } = await supabase
-              .from('comments')
+              .from(commentTable)
               .select('*', { count: 'exact', head: true })
-              .eq('post_id', post.id);
+              .eq(idField, item.id);
 
             return {
-              ...post,
+              ...item,
               comment_count: countError ? 0 : count || 0,
             };
           })
         );
 
-        setPosts(postsWithCommentCount);
+        setPosts(itemsWithCommentCount);
       } catch (error) {
-        console.error('Error fetching posts:', error);
+        console.error('Error fetching items:', error);
       } finally {
         setLoading(false);
       }
     };
 
     fetchPosts();
-  }, [dateString]);
+  }, [dateString, isMeeting]);
 
   return (
     <div className={styles.container}>
@@ -101,8 +109,8 @@ export default function DatePostsPage() {
           <h1 className={styles.title}>
             {formatDateDisplay(year, month, day)}
           </h1>
-          <Link href="/posts/new" className={styles.createButton}>
-            + 새 일정
+          <Link href={`/posts/new${isMeeting ? '?type=meeting' : ''}`} className={styles.createButton}>
+            + 새 {isMeeting ? '회의' : '일정'}
           </Link>
         </div>
 
@@ -119,8 +127,9 @@ export default function DatePostsPage() {
             <thead>
               <tr>
                 <th className={styles.titleCol}>제목</th>
-                <th className={styles.statusCol}>상태</th>
+                {!isMeeting && <th className={styles.statusCol}>상태</th>}
                 <th className={styles.authorCol}>작성자</th>
+                <th className={styles.dateCol}>작성시간</th>
                 <th className={styles.commentCol}>댓글</th>
               </tr>
             </thead>
@@ -129,29 +138,36 @@ export default function DatePostsPage() {
                 <tr
                   key={post.id}
                   className={styles.tableRow}
-                  onClick={() => router.push(`/posts/${post.id}`)}
+                  onClick={() => router.push(`/posts/${post.id}${isMeeting ? '?type=meeting' : ''}`)}
                 >
                   <td className={styles.titleCol}>
                     <div className={styles.titleCell}>{post.title}</div>
                   </td>
-                  <td className={styles.statusCol}>
-                    <div
-                      className={`${styles.statusCell} ${
-                        post.status === '진행중'
-                          ? styles.statusPending
-                          : post.status === '검수'
-                          ? styles.statusReview
-                          : post.status === '완료'
-                          ? styles.statusDone
-                          : styles.statusHold
-                      }`}
-                    >
-                      {post.status === '완료' ? '완료' : post.status}
-                    </div>
-                  </td>
+                  {!isMeeting && (
+                    <td className={styles.statusCol}>
+                      <div
+                        className={`${styles.statusCell} ${
+                          post.status === '진행중'
+                            ? styles.statusPending
+                            : post.status === '검수'
+                            ? styles.statusReview
+                            : post.status === '완료'
+                            ? styles.statusDone
+                            : styles.statusHold
+                        }`}
+                      >
+                        {post.status === '완료' ? '완료' : post.status}
+                      </div>
+                    </td>
+                  )}
                   <td className={styles.authorCol}>
                     <div className={styles.authorCell}>
                       {post.author || '미지정'}
+                    </div>
+                  </td>
+                  <td className={styles.dateCol}>
+                    <div className={styles.dateCell}>
+                      {formatDateTime(post.created_at)}
                     </div>
                   </td>
                   <td className={styles.commentCol}>

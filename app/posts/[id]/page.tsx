@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import styles from './page.module.css';
 import { supabase } from '@/lib/supabase';
 import ConfirmModal from '@/app/components/ConfirmModal';
@@ -159,7 +159,9 @@ const DUMMY_POSTS: Record<string, PostData> = {
 export default function PostDetail() {
   const params = useParams();
   const router = useRouter();
+  const searchParams = useSearchParams();
   const postId = params?.id as string;
+  const isMeeting = searchParams.get('type') === 'meeting';
   const [post, setPost] = useState<PostData | null>(null);
   const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
@@ -177,8 +179,9 @@ export default function PostDetail() {
   useEffect(() => {
     const fetchPost = async () => {
       try {
+        const table = isMeeting ? 'meetings' : 'posts';
         const { data, error } = await supabase
-          .from('posts')
+          .from(table)
           .select('*')
           .eq('id', postId)
           .single();
@@ -195,16 +198,19 @@ export default function PostDetail() {
     };
 
     fetchPost();
-  }, [postId]);
+  }, [postId, isMeeting]);
 
   // 댓글 가져오기
   useEffect(() => {
     const fetchComments = async () => {
       try {
+        const commentTable = isMeeting ? 'meeting_comments' : 'comments';
+        const idField = isMeeting ? 'meeting_id' : 'post_id';
+
         const { data, error } = await supabase
-          .from('comments')
+          .from(commentTable)
           .select('*')
-          .eq('post_id', postId)
+          .eq(idField, postId)
           .order('created_at', { ascending: false });
 
         if (error) throw error;
@@ -217,7 +223,7 @@ export default function PostDetail() {
     if (postId) {
       fetchComments();
     }
-  }, [postId]);
+  }, [postId, isMeeting]);
 
   const openStatusChangeModal = (newStatus: string) => {
     const statusMessages: Record<string, string> = {
@@ -248,6 +254,7 @@ export default function PostDetail() {
       if (error) throw error;
       setPost({ ...post, status: newStatus });
       setModalOpen(false);
+      router.push('/');
     } catch (error) {
       console.error('Error updating status:', error);
       alert('상태 변경에 실패했습니다.');
@@ -267,8 +274,9 @@ export default function PostDetail() {
 
   const handleDelete = async () => {
     try {
+      const table = isMeeting ? 'meetings' : 'posts';
       const { error } = await supabase
-        .from('posts')
+        .from(table)
         .delete()
         .eq('id', postId);
 
@@ -276,8 +284,9 @@ export default function PostDetail() {
       setModalOpen(false);
       router.push('/');
     } catch (error) {
-      console.error('Error deleting post:', error);
-      alert('일정 삭제에 실패했습니다.');
+      console.error('Error deleting item:', error);
+      const itemType = isMeeting ? '회의' : '일정';
+      alert(`${itemType} 삭제에 실패했습니다.`);
     }
   };
 
@@ -285,11 +294,14 @@ export default function PostDetail() {
     if (!newComment.trim() || !post) return;
 
     try {
+      const commentTable = isMeeting ? 'meeting_comments' : 'comments';
+      const idField = isMeeting ? 'meeting_id' : 'post_id';
+
       const { data, error } = await supabase
-        .from('comments')
+        .from(commentTable)
         .insert([
           {
-            post_id: postId,
+            [idField]: postId,
             content: newComment,
           },
         ])
@@ -308,8 +320,9 @@ export default function PostDetail() {
 
   const handleDeleteComment = async (commentId: string) => {
     try {
+      const commentTable = isMeeting ? 'meeting_comments' : 'comments';
       const { error } = await supabase
-        .from('comments')
+        .from(commentTable)
         .delete()
         .eq('id', commentId);
 
@@ -331,18 +344,25 @@ export default function PostDetail() {
     if (!post) return;
 
     const endDate = newEndDate || newStartDate;
+    const table = isMeeting ? 'meetings' : 'posts';
 
     try {
+      const updateData: any = {
+        title: newTitle,
+        start_date: newStartDate,
+        end_date: endDate,
+        author: newAuthor,
+        date: newStartDate,
+        content: newContent,
+      };
+
+      if (!isMeeting) {
+        updateData.status = post.status;
+      }
+
       const { error } = await supabase
-        .from('posts')
-        .update({
-          title: newTitle,
-          start_date: newStartDate,
-          end_date: endDate,
-          author: newAuthor,
-          date: newStartDate,
-          content: newContent,
-        })
+        .from(table)
+        .update(updateData)
         .eq('id', postId);
 
       if (error) throw error;
@@ -360,7 +380,7 @@ export default function PostDetail() {
         title: '수정 완료',
         message: '글이 수정되었습니다.',
         confirmText: '확인',
-        onConfirm: () => setModalOpen(false),
+        onConfirm: () => router.push('/'),
       });
       setModalOpen(true);
     } catch (error) {
@@ -531,51 +551,55 @@ export default function PostDetail() {
             >
               수정
             </button>
-            {post.status === '진행중' && (
+            {!isMeeting && (
               <>
-                <button
-                  type="button"
-                  className={styles.reviewButton}
-                  onClick={() => openStatusChangeModal('검수')}
-                >
-                  검수로 변경
-                </button>
-                <button
-                  type="button"
-                  className={styles.holdButton}
-                  onClick={() => openStatusChangeModal('보류')}
-                >
-                  보류
-                </button>
+                {post.status === '진행중' && (
+                  <>
+                    <button
+                      type="button"
+                      className={styles.reviewButton}
+                      onClick={() => openStatusChangeModal('검수')}
+                    >
+                      검수
+                    </button>
+                    <button
+                      type="button"
+                      className={styles.holdButton}
+                      onClick={() => openStatusChangeModal('보류')}
+                    >
+                      보류
+                    </button>
+                  </>
+                )}
+                {post.status === '검수' && (
+                  <>
+                    <button
+                      type="button"
+                      className={styles.doneButton}
+                      onClick={() => openStatusChangeModal('완료')}
+                    >
+                      완료
+                    </button>
+                    <button
+                      type="button"
+                      className={styles.holdButton}
+                      onClick={() => openStatusChangeModal('보류')}
+                    >
+                      보류
+                    </button>
+                  </>
+                )}
+                {post.status === '완료' && null}
+                {post.status === '보류' && (
+                  <button
+                    type="button"
+                    className={styles.reviewButton}
+                    onClick={() => openStatusChangeModal('진행중')}
+                  >
+                    진행중
+                  </button>
+                )}
               </>
-            )}
-            {post.status === '검수' && (
-              <>
-                <button
-                  type="button"
-                  className={styles.doneButton}
-                  onClick={() => openStatusChangeModal('완료')}
-                >
-                  완료
-                </button>
-                <button
-                  type="button"
-                  className={styles.holdButton}
-                  onClick={() => openStatusChangeModal('보류')}
-                >
-                  보류
-                </button>
-              </>
-            )}
-            {post.status === '완료' && null}
-            {post.status === '보류' && (
-              <button
-                type="button"
-                className={styles.reviewButton}
-                onClick={() => openStatusChangeModal('진행중')}
-              >
-                진행중으로 복구
-              </button>
             )}
             <button
               type="button"

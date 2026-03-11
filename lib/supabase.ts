@@ -21,3 +21,15 @@ export type Post = {
   updated_at: string;
   status: string;
 };
+
+export type Meeting = {
+  id: string;
+  title: string;
+  content: string;
+  date: string;
+  start_date: string;
+  end_date: string;
+  author: string;
+  created_at: string;
+  updated_at: string;
+};

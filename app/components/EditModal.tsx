@@ -74,7 +74,7 @@ export default function EditModal({
           </div>
 
           <div className={styles.formRow}>
-            <div className={styles.formGroup} style={{ flex: 1 }}>
+            <div style={{ flex: 1 }}>
               <label className={styles.label}>시작일</label>
               <input
                 type="date"
@@ -84,11 +84,9 @@ export default function EditModal({
               />
             </div>
 
-            <div style={{ padding: '0 8px', display: 'flex', alignItems: 'flex-end', marginBottom: '20px' }}>
-              ~
-            </div>
+            <div className={styles.dateSeparator}>~</div>
 
-            <div className={styles.formGroup} style={{ flex: 1 }}>
+            <div style={{ flex: 1 }}>
               <label className={styles.label}>종료일</label>
               <input
                 type="date"

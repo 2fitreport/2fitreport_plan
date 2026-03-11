@@ -8,16 +8,17 @@ import MonthYearPicker from './MonthYearPicker';
 interface CalendarProps {
   selectedDate: SelectedDate;
   onDateSelect: (date: SelectedDate) => void;
-  postsOnDate: Record<string, Array<{ title: string; status: string }>>; // 날짜별 게시물 제목과 상태
+  postsOnDate: Record<string, Array<{ title: string; status?: string }>>; // 날짜별 게시물 제목과 상태
   statusCounts: {
     진행중: number;
     검수: number;
     완료: number;
     보류: number;
   };
+  mode?: '일정' | '회의';
 }
 
-export default function Calendar({ selectedDate, onDateSelect, postsOnDate, statusCounts }: CalendarProps) {
+export default function Calendar({ selectedDate, onDateSelect, postsOnDate, statusCounts, mode = '일정' }: CalendarProps) {
   const [currentMonth, setCurrentMonth] = useState({
     year: new Date().getFullYear(),
     month: new Date().getMonth(),
@@ -101,26 +102,29 @@ export default function Calendar({ selectedDate, onDateSelect, postsOnDate, stat
         <button type="button" onClick={handleNextMonth} className={styles.navButton}>→</button>
       </div>
 
-      <div className={styles.legend}>
-        <div className={styles.legendItem}>
-          <div className={`${styles.legendColor} ${styles.statusPending}`}></div>
-          <span>진행중</span>
+      {mode === '일정' && (
+        <div className={styles.legend}>
+          <div className={styles.legendItem}>
+            <div className={`${styles.legendColor} ${styles.statusPending}`}></div>
+            <span>진행중</span>
+          </div>
+          <div className={styles.legendItem}>
+            <div className={`${styles.legendColor} ${styles.statusReview}`}></div>
+            <span>검수</span>
+          </div>
+          <div className={styles.legendItem}>
+            <div className={`${styles.legendColor} ${styles.statusDone}`}></div>
+            <span>완료</span>
+          </div>
+          <div className={styles.legendItem}>
+            <div className={`${styles.legendColor} ${styles.statusHold}`}></div>
+            <span>보류</span>
+          </div>
         </div>
-        <div className={styles.legendItem}>
-          <div className={`${styles.legendColor} ${styles.statusReview}`}></div>
-          <span>검수</span>
-        </div>
-        <div className={styles.legendItem}>
-          <div className={`${styles.legendColor} ${styles.statusDone}`}></div>
-          <span>완료</span>
-        </div>
-        <div className={styles.legendItem}>
-          <div className={`${styles.legendColor} ${styles.statusHold}`}></div>
-          <span>보류</span>
-        </div>
-      </div>
+      )}
 
-      <div className={styles.statusSummary}>
+      {mode === '일정' && (
+        <div className={styles.statusSummary}>
         <div className={styles.summaryItem}>
           <div className={`${styles.summaryDot} ${styles.statusPending}`}></div>
           <span className={styles.summaryLabel}>진행중</span>
@@ -142,6 +146,7 @@ export default function Calendar({ selectedDate, onDateSelect, postsOnDate, stat
           <span className={styles.summaryCount}>{statusCounts.보류}</span>
         </div>
       </div>
+      )}
 
       {showPicker && (
         <MonthYearPicker

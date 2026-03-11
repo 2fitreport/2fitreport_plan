@@ -121,7 +121,7 @@
 }
 
 .titleCol {
-  width: 50%;
+  width: 35%;
 }
 
 .statusCol {
@@ -129,6 +129,10 @@
 }
 
 .authorCol {
+  width: 15%;
+}
+
+.dateCol {
   width: 15%;
 }
 
@@ -197,7 +201,7 @@
 }
 
 .commentCountCell {
-  text-align: center;
+  text-align: left;
   font-size: 14px;
   font-weight: 600;
   color: #5b6dea;
@@ -224,7 +228,7 @@
   }
 
   .titleCol {
-    width: 45%;
+    width: 30%;
   }
 
   .statusCol {
@@ -232,6 +236,10 @@
   }
 
   .authorCol {
+    width: 15%;
+  }
+
+  .dateCol {
     width: 15%;
   }
 

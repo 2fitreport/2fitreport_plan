@@ -1,9 +1,39 @@
 .container {
+  min-height: 100vh;
   background-color: #f8f9fa;
   padding: 16px;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+}
+
+.tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 24px;
+  border-bottom: 2px solid #e5e5e5;
+}
+
+.tab {
+  padding: 12px 24px;
+  border: none;
+  background: transparent;
+  font-size: 15px;
+  font-weight: 500;
+  color: #9a98a6;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+}
+
+.tab:hover {
+  color: #37352f;
+}
+
+.tab.active {
+  color: #5b6dea;
+  border-bottom-color: #5b6dea;
 }
 
 .calendarWrapper {

@@ -1,15 +1,13 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import styles from './page.module.css';
+import { useRouter } from 'next/navigation';
+import styles from '@/app/posts/new/page.module.css';
 import { supabase } from '@/lib/supabase';
 import ConfirmModal from '@/app/components/ConfirmModal';
 
-export default function NewPost() {
+export default function NewMeeting() {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const isMeeting = searchParams.get('type') === 'meeting';
   const today = new Date().toISOString().split('T')[0];
   const [formData, setFormData] = useState({
     title: '',
@@ -17,7 +15,6 @@ export default function NewPost() {
     end_date: '',
     author: '',
     content: '',
-    status: '진행중',
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -51,33 +48,27 @@ export default function NewPost() {
       localStorage.setItem('author', formData.author);
 
       const endDate = formData.end_date || formData.start_date;
-      const table = isMeeting ? 'meetings' : 'posts';
-
-      const insertData: any = {
-        title: formData.title,
-        content: formData.content,
-        date: formData.start_date,
-        start_date: formData.start_date,
-        end_date: endDate,
-        author: formData.author,
-      };
-
-      if (!isMeeting) {
-        insertData.status = formData.status;
-      }
 
       const { data, error } = await supabase
-        .from(table)
-        .insert([insertData]);
+        .from('meetings')
+        .insert([
+          {
+            title: formData.title,
+            content: formData.content,
+            date: formData.start_date,
+            start_date: formData.start_date,
+            end_date: endDate,
+            author: formData.author,
+          },
+        ]);
 
       if (error) throw error;
 
       setModalOpen(false);
       router.push('/');
     } catch (error) {
-      console.error('Error creating item:', error);
-      const itemType = isMeeting ? '회의' : '일정';
-      alert(`${itemType} 등록에 실패했습니다.`);
+      console.error('Error creating meeting:', error);
+      alert('회의 등록에 실패했습니다.');
       setIsSubmitting(false);
       setModalOpen(false);
     }
@@ -94,7 +85,7 @@ export default function NewPost() {
       </button>
 
       <form className={styles.form} onSubmit={handleSubmit}>
-        <h1 className={styles.title}>새 {isMeeting ? '회의' : '일정'} 등록</h1>
+        <h1 className={styles.title}>새 회의 등록</h1>
 
         <div className={styles.formGroup}>
           <label htmlFor="title" className={styles.label}>
@@ -106,7 +97,7 @@ export default function NewPost() {
             name="title"
             value={formData.title}
             onChange={handleInputChange}
-            placeholder="일정 제목을 입력하세요"
+            placeholder="회의 제목을 입력하세요"
             required
             className={styles.input}
           />
@@ -196,15 +187,15 @@ export default function NewPost() {
             className={styles.submitButton}
             disabled={isSubmitting}
           >
-            {isSubmitting ? '등록 중...' : `${isMeeting ? '회의' : '일정'} 등록`}
+            {isSubmitting ? '등록 중...' : '회의 등록'}
           </button>
         </div>
       </form>
 
       <ConfirmModal
         isOpen={modalOpen}
-        title={`${isMeeting ? '회의' : '일정'} 등록`}
-        message={`다음 내용으로 ${isMeeting ? '회의' : '일정'}를 등록하시겠습니까?
+        title="회의 등록"
+        message={`다음 내용으로 회의를 등록하시겠습니까?
 
 제목: ${formData.title}
 작성자: ${formData.author || '미지정'}
