@@ -193,7 +193,15 @@ export default function Calendar({ selectedDate, onDateSelect, postsOnDate, stat
                 posts.length > 0 ? styles.hasPost : ''
               }`}
             >
-              <span className={styles.dayNumber}>{day}</span>
+              <span className={styles.dayLabel}>
+                {dayNames[new Date(currentMonth.year, currentMonth.month, day).getDay()]}
+              </span>
+              <div className={styles.dayNumberRow}>
+                <span className={styles.dayNumber}>{day}</span>
+                {posts.length > 0 && (
+                  <span className={styles.dayCount}>{posts.length}</span>
+                )}
+              </div>
               {posts.length > 0 && (
                 <div className={styles.postsList}>
                   {posts.map((post, idx) => (

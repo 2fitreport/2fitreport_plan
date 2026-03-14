@@ -33,3 +33,14 @@ export type Meeting = {
   created_at: string;
   updated_at: string;
 };
+
+export type Memo = {
+  id: string;
+  company_name: string;
+  representative_name: string;
+  title: string;
+  content: string;
+  author: string;
+  created_at: string;
+  updated_at: string;
+};

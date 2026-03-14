@@ -84,14 +84,53 @@
 
 @media (max-width: 480px) {
   .picker {
-    padding: 24px;
+    padding: 20px;
+    width: 95%;
   }
 
   .grid {
     grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
   }
 
   .monthGrid {
     grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+  }
+
+  .item {
+    padding: 10px 8px;
+    font-size: 13px;
+  }
+
+  .label {
+    font-size: 12px;
+    margin-bottom: 10px;
+  }
+
+  .section {
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 375px) {
+  .picker {
+    padding: 16px;
+    border-radius: 8px;
+  }
+
+  .grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+  }
+
+  .monthGrid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+  }
+
+  .item {
+    padding: 8px 6px;
+    font-size: 12px;
   }
 }

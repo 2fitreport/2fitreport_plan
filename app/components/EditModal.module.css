@@ -184,3 +184,61 @@
 .saveButton:hover {
   background-color: #4a5ccf;
 }
+
+@media (max-width: 480px) {
+  .modal {
+    width: 96%;
+    max-height: 95vh;
+    border-radius: 8px;
+  }
+
+  .header {
+    padding: 16px 16px 10px;
+  }
+
+  .title {
+    font-size: 16px;
+  }
+
+  .content {
+    padding: 14px 16px;
+  }
+
+  .formGroup {
+    margin-bottom: 14px;
+  }
+
+  .label {
+    font-size: 12px;
+  }
+
+  .input,
+  .textarea {
+    font-size: 13px;
+    padding: 8px 10px;
+  }
+
+  .footer {
+    padding: 12px 16px 16px;
+    gap: 8px;
+  }
+
+  .cancelButton,
+  .saveButton {
+    padding: 8px 14px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 375px) {
+  .formRow {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .dateSeparator {
+    margin-top: 0;
+    text-align: center;
+    padding: 4px 0;
+  }
+}

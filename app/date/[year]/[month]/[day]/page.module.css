@@ -13,7 +13,7 @@
   align-items: center;
   gap: 8px;
   padding: 8px 12px;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
   background: white;
   border: 1px solid #e5e5e5;
   border-radius: 6px;
@@ -24,7 +24,6 @@
   cursor: pointer;
   transition: all 0.15s ease;
   width: 100%;
-  max-width: none;
   justify-content: flex-start;
 }
 
@@ -36,10 +35,6 @@
 .content {
   width: 100%;
   height: calc(100vh - 104px);
-  background: white;
-  border-radius: 12px;
-  padding: 28px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
   overflow-y: auto;
   display: flex;
   flex-direction: column;
@@ -49,15 +44,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 24px;
-  padding-bottom: 0;
-  border-bottom: none;
+  margin-bottom: 16px;
   flex-shrink: 0;
 }
 
 .title {
-  margin: 0 0 16px 0;
-  font-size: 28px;
+  margin: 0;
+  font-size: 22px;
   font-weight: 700;
   color: #37352f;
   letter-spacing: -0.02em;
@@ -66,7 +59,7 @@
 .createButton {
   background-color: #5b6dea;
   color: white;
-  padding: 10px 20px;
+  padding: 8px 16px;
   border-radius: 6px;
   text-decoration: none;
   font-size: 13px;
@@ -74,6 +67,7 @@
   transition: all 0.15s ease;
   display: inline-block;
   cursor: pointer;
+  white-space: nowrap;
 }
 
 .createButton:hover {
@@ -84,9 +78,6 @@
 .emptyState {
   text-align: center;
   padding: 60px 20px;
-  background: transparent;
-  border-radius: 0;
-  box-shadow: none;
 }
 
 .emptyText {
@@ -96,13 +87,15 @@
   font-weight: 500;
 }
 
+.tableWrapper {
+  overflow-x: auto;
+  width: 100%;
+}
+
 .postsTable {
   width: 100%;
-  background: transparent;
   border-collapse: collapse;
-  border-radius: 0;
-  box-shadow: none;
-  overflow: visible;
+  table-layout: fixed;
 }
 
 .postsTable thead {
@@ -111,7 +104,7 @@
 }
 
 .postsTable th {
-  padding: 16px;
+  padding: 10px 6px;
   text-align: left;
   font-size: 13px;
   font-weight: 600;
@@ -121,7 +114,7 @@
 }
 
 .titleCol {
-  width: 35%;
+  width: 50%;
 }
 
 .statusCol {
@@ -129,15 +122,11 @@
 }
 
 .authorCol {
-  width: 15%;
+  width: 20%;
 }
 
 .dateCol {
   width: 15%;
-}
-
-.commentCol {
-  width: 20%;
 }
 
 .tableRow {
@@ -155,20 +144,31 @@
 }
 
 .postsTable td {
-  padding: 16px;
+  padding: 10px 6px;
   font-size: 14px;
   color: #37352f;
 }
 
 .titleCell {
+  font-size: 14px;
   font-weight: 500;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.commentBadge {
+  font-size: 12px;
+  font-weight: 600;
+  color: #5b6dea;
+  flex-shrink: 0;
 }
 
 .statusCell {
-  padding: 4px 10px;
+  padding: 3px 8px;
   border-radius: 4px;
   font-size: 12px;
   font-weight: 500;
@@ -198,6 +198,17 @@
 .authorCell {
   color: #6f6e77;
   font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dateCell {
+  color: #6f6e77;
+  font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .commentCountCell {
@@ -209,51 +220,91 @@
 
 @media (max-width: 768px) {
   .container {
-    padding: 20px;
+    padding: 12px;
   }
 
   .title {
-    font-size: 24px;
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 8px;
   }
 
-  .header {
-    flex-direction: column;
-    gap: 16px;
-    align-items: flex-start;
+  .backButton {
+    padding: 6px 10px;
+    font-size: 12px;
+    margin-bottom: 10px;
+  }
+
+  .title {
+    font-size: 15px;
   }
 
   .createButton {
-    width: 100%;
-    text-align: center;
-  }
-
-  .titleCol {
-    width: 30%;
-  }
-
-  .statusCol {
-    width: 15%;
-  }
-
-  .authorCol {
-    width: 15%;
+    padding: 7px 10px;
+    font-size: 12px;
   }
 
   .dateCol {
-    width: 15%;
+    display: none;
   }
 
-  .commentCol {
+  .titleCol {
+    width: 55%;
+  }
+
+  .statusCol {
+    width: 20%;
+  }
+
+  .authorCol {
     width: 25%;
   }
 
   .postsTable th,
   .postsTable td {
-    padding: 12px;
+    padding: 8px 5px;
     font-size: 12px;
   }
+}
 
-  .authorCell {
-    font-size: 12px;
+@media (max-width: 375px) {
+  .container {
+    padding: 6px;
+  }
+
+  .title {
+    font-size: 13px;
+  }
+
+  .createButton {
+    padding: 6px 8px;
+    font-size: 11px;
+  }
+
+  .postsTable th,
+  .postsTable td {
+    padding: 7px 4px;
+    font-size: 11px;
+  }
+
+  .statusCell {
+    font-size: 10px;
+    padding: 2px 5px;
+  }
+
+  .titleCol {
+    width: 60%;
+  }
+
+  .statusCol {
+    width: 18%;
+  }
+
+  .authorCol {
+    width: 22%;
   }
 }

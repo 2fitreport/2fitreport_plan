@@ -51,7 +51,7 @@
   background: white;
   border-radius: 12px;
   padding: 28px;
-  padding-bottom: 180px;
+  padding-bottom: 140px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
   display: flex;
   flex-direction: column;
@@ -77,10 +77,19 @@
 .meta {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
   gap: 12px;
   font-size: 13px;
   color: #9a98a6;
+  flex-wrap: wrap;
+}
+
+.metaBadge {
+  background-color: #eff0fb;
+  color: #5b6dea;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
 }
 
 .date {
@@ -92,46 +101,10 @@
   color: #d4d4d8;
 }
 
-.dateLabel {
-  background-color: #f0f0f0;
-  padding: 4px 10px;
-  border-radius: 4px;
-  font-size: 12px;
-  font-weight: 500;
-  color: #6f6e77;
-}
-
 .author {
   font-size: 13px;
   font-weight: 500;
   color: #6f6e77;
-}
-
-.statusBadge {
-  padding: 4px 10px;
-  border-radius: 4px;
-  font-size: 12px;
-  font-weight: 500;
-}
-
-.statusPending {
-  background-color: #dbeafe;
-  color: #1d4ed8;
-}
-
-.statusReview {
-  background-color: #fef3c7;
-  color: #d97706;
-}
-
-.statusDone {
-  background-color: #dcfce7;
-  color: #15803d;
-}
-
-.statusHold {
-  background-color: #fecaca;
-  color: #991b1b;
 }
 
 .content {
@@ -200,66 +173,6 @@
 .deleteButton:hover {
   background-color: #fef3c7;
   border-color: #fbbf24;
-}
-
-.reviewButton {
-  background-color: #d97706;
-  color: white;
-  border-color: #d97706;
-  padding: 8px 16px;
-  border-radius: 6px;
-  border: 1px solid #d97706;
-  font-size: 13px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-
-.reviewButton:hover {
-  background-color: #b45309;
-  border-color: #b45309;
-}
-
-.doneButton {
-  background-color: #15803d;
-  color: white;
-  border-color: #15803d;
-  padding: 8px 16px;
-  border-radius: 6px;
-  border: 1px solid #15803d;
-  font-size: 13px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-
-.doneButton:hover {
-  background-color: #166534;
-  border-color: #166534;
-}
-
-.holdButton {
-  background-color: #ef4444;
-  color: white;
-  border-color: #ef4444;
-  padding: 8px 16px;
-  border-radius: 6px;
-  border: 1px solid #ef4444;
-  font-size: 13px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-
-.holdButton:hover {
-  background-color: #dc2626;
-  border-color: #dc2626;
-}
-
-.completeText {
-  color: #15803d;
-  font-weight: 600;
-  font-size: 13px;
 }
 
 .notFound {
@@ -399,30 +312,13 @@
 @media (max-width: 768px) {
   .article {
     padding: 20px;
-    padding-bottom: 180px;
   }
 
   .title {
     font-size: 22px;
   }
 
-  .meta {
-    flex-wrap: wrap;
-    gap: 6px;
-    font-size: 12px;
-  }
-
-  .dateLabel {
-    font-size: 11px;
-    padding: 3px 7px;
-  }
-
-  .paragraph {
-    font-size: 15px;
-  }
-
   .actions {
-    flex-wrap: wrap;
     gap: 8px;
   }
 }
@@ -445,7 +341,7 @@
 
   .article {
     padding: 16px;
-    padding-bottom: 160px;
+    padding-bottom: 120px;
     border-radius: 8px;
   }
 
@@ -456,18 +352,12 @@
 
   .meta {
     font-size: 11px;
-    gap: 4px;
-    flex-wrap: wrap;
+    gap: 6px;
   }
 
-  .dateLabel {
-    font-size: 10px;
-    padding: 2px 6px;
-  }
-
-  .statusBadge {
-    font-size: 10px;
-    padding: 2px 7px;
+  .metaBadge {
+    font-size: 11px;
+    padding: 3px 8px;
   }
 
   .content {
@@ -480,14 +370,10 @@
 
   .actions {
     gap: 8px;
-    flex-wrap: wrap;
   }
 
   .editButton,
-  .deleteButton,
-  .reviewButton,
-  .doneButton,
-  .holdButton {
+  .deleteButton {
     padding: 8px 12px;
     font-size: 12px;
   }
@@ -523,26 +409,15 @@
 @media (max-width: 375px) {
   .article {
     padding: 12px;
-    padding-bottom: 150px;
+    padding-bottom: 100px;
   }
 
   .title {
     font-size: 16px;
   }
 
-  .meta {
-    font-size: 10px;
-  }
-
-  .content {
-    font-size: 13px;
-  }
-
   .editButton,
-  .deleteButton,
-  .reviewButton,
-  .doneButton,
-  .holdButton {
+  .deleteButton {
     padding: 7px 10px;
     font-size: 11px;
   }

@@ -1,8 +1,6 @@
 .calendar {
-  background: white;
-  border-radius: 12px;
-  padding: 28px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  background: transparent;
+  padding: 16px;
   width: 100%;
   max-width: none;
 }
@@ -13,121 +11,6 @@
   align-items: center;
   margin-bottom: 24px;
   gap: 16px;
-}
-
-.legend {
-  display: flex;
-  gap: 24px;
-  margin-bottom: 24px;
-  padding: 16px;
-  background-color: #f8f9fa;
-  border-radius: 8px;
-  flex-wrap: wrap;
-}
-
-.legendItem {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  font-weight: 500;
-  color: #37352f;
-}
-
-.legendColor {
-  width: 20px;
-  height: 20px;
-  border-radius: 4px;
-}
-
-.legendColor.statusPending {
-  background-color: #fef08a;
-}
-
-.legendColor.statusReview {
-  background-color: #bfdbfe;
-}
-
-.legendColor.statusDone {
-  background-color: #bbf7d0;
-}
-
-.legendColor.statusHold {
-  background-color: #fca5a5;
-}
-
-.statusSummary {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
-  margin-bottom: 24px;
-  padding: 16px;
-  background-color: #f8f9fa;
-  border-radius: 8px;
-}
-
-.summaryItem {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 12px;
-  background-color: white;
-  border-radius: 6px;
-  border: 1px solid #e5e5e5;
-}
-
-.summaryDot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-.summaryDot.statusPending {
-  background-color: #fef08a;
-}
-
-.summaryDot.statusReview {
-  background-color: #bfdbfe;
-}
-
-.summaryDot.statusDone {
-  background-color: #bbf7d0;
-}
-
-.summaryDot.statusHold {
-  background-color: #fca5a5;
-}
-
-.summaryLabel {
-  font-size: 13px;
-  color: #6f6e77;
-  font-weight: 500;
-  flex: 1;
-}
-
-.summaryCount {
-  font-size: 16px;
-  font-weight: 700;
-  color: #37352f;
-  min-width: 24px;
-  text-align: right;
-}
-
-@media (max-width: 768px) {
-  .statusSummary {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-    padding: 12px;
-  }
-
-  .summaryItem {
-    padding: 10px;
-  }
-
-  .summaryCount {
-    font-size: 14px;
-  }
 }
 
 .headerCenter {
@@ -152,15 +35,6 @@
 
 .navButton:hover {
   background-color: #f0f0f0;
-}
-
-.title {
-  font-size: 20px;
-  font-weight: 600;
-  margin: 0;
-  min-width: 180px;
-  text-align: center;
-  color: #37352f;
 }
 
 .titleButton {
@@ -192,7 +66,6 @@
   border-radius: 4px;
   cursor: pointer;
   transition: all 0.15s ease;
-  text-transform: uppercase;
   letter-spacing: 0.03em;
 }
 
@@ -200,27 +73,103 @@
   background-color: #4a5ccf;
 }
 
+.legend {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 24px;
+  padding: 16px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  flex-wrap: wrap;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #37352f;
+}
+
+.legendColor {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+}
+
+.legendColor.statusPending { background-color: #fef08a; }
+.legendColor.statusReview  { background-color: #bfdbfe; }
+.legendColor.statusDone    { background-color: #bbf7d0; }
+.legendColor.statusHold    { background-color: #fca5a5; }
+
+.statusSummary {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 24px;
+  padding: 16px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+}
+
+.summaryItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  background-color: white;
+  border-radius: 6px;
+  border: 1px solid #e5e5e5;
+}
+
+.summaryDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.summaryDot.statusPending { background-color: #fef08a; }
+.summaryDot.statusReview  { background-color: #bfdbfe; }
+.summaryDot.statusDone    { background-color: #bbf7d0; }
+.summaryDot.statusHold    { background-color: #fca5a5; }
+
+.summaryLabel {
+  font-size: 13px;
+  color: #6f6e77;
+  font-weight: 500;
+  flex: 1;
+}
+
+.summaryCount {
+  font-size: 16px;
+  font-weight: 700;
+  color: #37352f;
+  min-width: 24px;
+  text-align: right;
+}
+
 .weekDays {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 10px;
-  margin-bottom: 12px;
+  gap: 6px;
+  margin-bottom: 6px;
 }
 
 .weekDay {
   text-align: center;
   font-weight: 600;
-  font-size: 13px;
+  font-size: 12px;
   color: #9a98a6;
-  padding: 16px 0;
-  text-transform: uppercase;
+  padding: 10px 0;
   letter-spacing: 0.04em;
 }
 
 .daysGrid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 10px;
+  gap: 6px;
 }
 
 .emptyDay {
@@ -230,10 +179,10 @@
 .day {
   aspect-ratio: 1 / 1.1;
   border: 1px solid #e5e5e5;
-  border-radius: 8px;
+  border-radius: 6px;
   background: white;
   cursor: pointer;
-  padding: 16px;
+  padding: 10px 8px;
   font-size: 14px;
   position: relative;
   display: flex;
@@ -246,19 +195,47 @@
 }
 
 .day:hover {
-  border-color: #e5e5e5;
   background-color: #f8f8f8;
+}
+
+.dayLabel {
+  display: none;
+  font-size: 9px;
+  font-weight: 500;
+  color: #9a98a6;
+  margin-bottom: 1px;
+}
+
+.dayNumberRow {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 6px;
+  width: 100%;
 }
 
 .dayNumber {
   font-weight: 700;
-  margin-bottom: 12px;
-  font-size: 18px;
+  font-size: 15px;
   color: #37352f;
+}
+
+.dayCount {
+  font-size: 10px;
+  font-weight: 700;
+  color: #5b6dea;
+  background: #eef0fd;
+  border-radius: 8px;
+  padding: 1px 5px;
+  line-height: 1.4;
+  flex-shrink: 0;
 }
 
 .selected {
   border-color: #5b6dea;
+}
+
+.selected .dayNumber {
   color: #5b6dea;
 }
 
@@ -273,7 +250,6 @@
 
 .hasPost.selected {
   border-color: #5b6dea;
-  color: #5b6dea;
 }
 
 .postsList {
@@ -296,42 +272,105 @@
   line-height: 1.4;
 }
 
-.postItem.statusPending {
-  background-color: #fef08a;
-  color: #b45309;
+.postItem.statusPending { background-color: #fef08a; color: #b45309; }
+.postItem.statusReview  { background-color: #bfdbfe; color: #1e40af; }
+.postItem.statusDone    { background-color: #bbf7d0; color: #065f46; }
+.postItem.statusHold    { background-color: #fca5a5; color: #7f1d1d; }
+
+.selected .postItem.statusPending { background-color: #fef3c7; color: #92400e; }
+.selected .postItem.statusReview  { background-color: #dbeafe; color: #1d4ed8; }
+.selected .postItem.statusDone    { background-color: #d1fae5; color: #065f46; }
+.selected .postItem.statusHold    { background-color: #fecaca; color: #7f1d1d; }
+
+/* ── 반응형 ── */
+
+@media (max-width: 1300px) {
+  .dayNumber { font-size: 13px; }
+  .dayCount { font-size: 9px; }
+  .postItem { font-size: 11px; padding: 4px 6px; }
+  .weekDay { font-size: 11px; }
 }
 
-.postItem.statusReview {
-  background-color: #bfdbfe;
-  color: #1e40af;
+@media (max-width: 1050px) {
+  .calendar { padding: 12px; }
+
+  .weekDays { display: none; }
+  .emptyDay { display: none; }
+
+  .daysGrid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 4px;
+  }
+
+  .dayLabel {
+    display: block;
+  }
+
+  .dayNumberRow { margin-bottom: 2px; }
+  .dayNumber { font-size: 13px; }
+  .dayCount { font-size: 9px; padding: 1px 4px; }
+
+  .day { padding: 6px 4px; }
+
+  .postItem { font-size: 10px; padding: 2px 4px; }
+
+  .statusSummary {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    padding: 12px;
+  }
+
+  .summaryItem { padding: 10px; }
+  .summaryCount { font-size: 14px; }
 }
 
-.postItem.statusDone {
-  background-color: #bbf7d0;
-  color: #065f46;
+@media (max-width: 700px) {
+  .calendar { padding: 8px; border-radius: 8px; }
+
+  .header { margin-bottom: 8px; gap: 4px; }
+  .navButton { font-size: 14px; padding: 4px 6px; }
+  .titleButton { font-size: 13px; padding: 5px 8px; min-width: 0; }
+  .todayButton { font-size: 10px; padding: 4px 6px; }
+
+  .legend { gap: 8px; padding: 8px; margin-bottom: 8px; }
+  .legendItem { font-size: 10px; gap: 4px; }
+  .legendColor { width: 12px; height: 12px; }
+
+  .statusSummary { gap: 4px; padding: 6px; margin-bottom: 8px; }
+  .summaryItem { padding: 6px 4px; gap: 4px; }
+  .summaryLabel { font-size: 10px; }
+  .summaryCount { font-size: 12px; }
+
+  .daysGrid { grid-template-columns: repeat(5, 1fr); gap: 2px; }
+
+  .day { padding: 6px 4px; border-radius: 4px; }
+  .dayLabel { font-size: 10px; }
+  .dayNumberRow { margin-bottom: 2px; gap: 3px; }
+  .dayNumber { font-size: 13px; }
+  .dayCount { font-size: 10px; padding: 1px 4px; }
+
+  .postItem { font-size: 10px; padding: 2px 4px; border-radius: 2px; }
+  .postsList { gap: 1px; }
 }
 
-.postItem.statusHold {
-  background-color: #fca5a5;
-  color: #7f1d1d;
+@media (max-width: 550px) {
+  .calendar { padding: 6px; }
+
+  .header { margin-bottom: 6px; }
+  .navButton { font-size: 12px; padding: 3px 5px; }
+  .titleButton { font-size: 12px; padding: 4px 6px; }
+
+  .daysGrid { grid-template-columns: repeat(4, 1fr); }
+
+  .day { padding: 5px 3px; }
+  .dayLabel { font-size: 9px; }
+  .dayNumberRow { margin-bottom: 2px; gap: 3px; }
+  .dayNumber { font-size: 12px; }
+  .dayCount { font-size: 9px; padding: 1px 4px; }
+
+  .postItem { font-size: 9px; padding: 2px 3px; }
 }
 
-.selected .postItem.statusPending {
-  background-color: #fef3c7;
-  color: #92400e;
-}
-
-.selected .postItem.statusReview {
-  background-color: #dbeafe;
-  color: #1d4ed8;
-}
-
-.selected .postItem.statusDone {
-  background-color: #d1fae5;
-  color: #065f46;
-}
-
-.selected .postItem.statusHold {
-  background-color: #fecaca;
-  color: #7f1d1d;
+@media (max-width: 450px) {
+  .daysGrid { grid-template-columns: repeat(3, 1fr); }
 }

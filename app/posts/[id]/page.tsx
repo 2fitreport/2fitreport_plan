@@ -409,7 +409,7 @@ function PostDetailContent() {
           >
             ← 게시판으로 돌아가기
           </button>
-          <Link href="/" className={styles.backButton}>
+          <Link href={isMeeting ? '/?tab=회의' : '/?tab=일정'} className={styles.backButton}>
             ← 달력으로 돌아가기
           </Link>
         </div>
@@ -439,7 +439,7 @@ function PostDetailContent() {
         >
           ← 게시판으로 돌아가기
         </button>
-        <Link href="/" className={styles.backButton}>
+        <Link href={isMeeting ? '/?tab=회의' : '/?tab=일정'} className={styles.backButton}>
           ← 달력으로 돌아가기
         </Link>
       </div>

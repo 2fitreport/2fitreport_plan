@@ -98,7 +98,7 @@ function DatePostsContent() {
     <div className={styles.container}>
       <button
         type="button"
-        onClick={() => router.back()}
+        onClick={() => router.push(isMeeting ? '/?tab=회의' : '/?tab=일정')}
         className={styles.backButton}
       >
         ← 달력으로 돌아가기
@@ -123,6 +123,7 @@ function DatePostsContent() {
             <p className={styles.emptyText}>이 날짜에 등록된 일정이 없습니다</p>
           </div>
         ) : (
+          <div className={styles.tableWrapper}>
           <table className={styles.postsTable}>
             <thead>
               <tr>
@@ -130,7 +131,6 @@ function DatePostsContent() {
                 {!isMeeting && <th className={styles.statusCol}>상태</th>}
                 <th className={styles.authorCol}>작성자</th>
                 <th className={styles.dateCol}>작성시간</th>
-                <th className={styles.commentCol}>댓글</th>
               </tr>
             </thead>
             <tbody>
@@ -141,7 +141,12 @@ function DatePostsContent() {
                   onClick={() => router.push(`/posts/${post.id}${isMeeting ? '?type=meeting' : ''}`)}
                 >
                   <td className={styles.titleCol}>
-                    <div className={styles.titleCell}>{post.title}</div>
+                    <div className={styles.titleCell}>
+                      {post.title}
+                      {(post.comment_count ?? 0) > 0 && (
+                        <span className={styles.commentBadge}>({post.comment_count})</span>
+                      )}
+                    </div>
                   </td>
                   {!isMeeting && (
                     <td className={styles.statusCol}>
@@ -170,15 +175,11 @@ function DatePostsContent() {
                       {formatDateTime(post.created_at)}
                     </div>
                   </td>
-                  <td className={styles.commentCol}>
-                    <div className={styles.commentCountCell}>
-                      {post.comment_count || 0}
-                    </div>
-                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
+          </div>
         )}
       </div>
     </div>
