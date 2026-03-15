@@ -202,10 +202,8 @@ export default function MemoDetail() {
   return (
     <div className={styles.container}>
       <div className={styles.backButtons}>
-        <button type="button" onClick={() => router.back()} className={styles.backButton}>
-          ← 목록으로 돌아가기
-        </button>
-        <Link href="/" className={styles.backButton}>← 홈으로 돌아가기</Link>
+        <Link href="/?tab=메모" className={styles.backButton}>← 목록으로 돌아가기</Link>
+        <Link href="/?tab=메모" className={styles.backButton}>← 홈으로 돌아가기</Link>
       </div>
 
       <article className={styles.article}>
