@@ -212,15 +212,9 @@ export default function MemoDetail() {
         <header className={styles.articleHeader}>
           <h1 className={styles.title}>{memo.company_name || memo.representative_name || '메모'}</h1>
           <div className={styles.meta}>
-            {memo.company_name && (
-              <>
-                <span className={styles.metaBadge}>{memo.company_name}</span>
-                <span className={styles.separator}>•</span>
-              </>
-            )}
             {memo.representative_name && (
               <>
-                <span className={styles.metaBadge}>{memo.representative_name}</span>
+                <span className={styles.metaBadge}>{memo.representative_name} 대표님</span>
                 <span className={styles.separator}>•</span>
               </>
             )}
