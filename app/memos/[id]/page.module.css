@@ -117,6 +117,7 @@
 .paragraph {
   margin: 16px 0;
   color: #37352f;
+  word-break: break-all;
 }
 
 .paragraph:first-child {

@@ -109,7 +109,7 @@ function DatePostsContent() {
           <h1 className={styles.title}>
             {formatDateDisplay(year, month, day)}
           </h1>
-          <Link href={`/posts/new${isMeeting ? '?type=meeting' : ''}`} className={styles.createButton}>
+          <Link href={isMeeting ? '/meetings/new' : '/posts/new'} className={styles.createButton}>
             + 새 {isMeeting ? '회의' : '일정'}
           </Link>
         </div>

@@ -33,7 +33,7 @@ export default function MemoEditModal({
     <div className={styles.overlay} onClick={onCancel}>
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
         <div className={styles.header}>
-          <h2 className={styles.title}>메모 수정</h2>
+          <h2 className={styles.title}>기업 수정</h2>
           <button type="button" onClick={onCancel} className={styles.closeButton}>✕</button>
         </div>
 

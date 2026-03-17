@@ -7,7 +7,7 @@ import { SelectedDate } from '@/app/types';
 import { supabase } from '@/lib/supabase';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-type TabType = '메모' | '일정' | '회의';
+type TabType = '진행기업' | '일정' | '회의';
 
 interface Memo {
   id: string;
@@ -15,7 +15,9 @@ interface Memo {
   representative_name: string;
   title: string;
   author: string;
+  content: string;
   created_at: string;
+  memo_comments: { content: string }[];
 }
 
 function HomeContent() {
@@ -30,7 +32,7 @@ function HomeContent() {
 
   const tabParam = searchParams.get('tab');
   const [activeTab, setActiveTab] = useState<TabType>(
-    tabParam === '일정' || tabParam === '회의' ? tabParam : '메모'
+    tabParam === '일정' || tabParam === '회의' ? tabParam : '진행기업'
   );
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -39,7 +41,7 @@ function HomeContent() {
     if (tab === '일정' || tab === '회의') {
       setActiveTab(tab);
     } else {
-      setActiveTab('메모');
+      setActiveTab('진행기업');
     }
   }, [searchParams]);
   const [posts, setPosts] = useState<any[]>([]);
@@ -57,7 +59,7 @@ function HomeContent() {
         ] = await Promise.all([
           supabase.from('posts').select('*').order('created_at', { ascending: false }),
           supabase.from('meetings').select('*').order('created_at', { ascending: false }),
-          supabase.from('memos').select('*').order('updated_at', { ascending: false }),
+          supabase.from('memos').select('*, memo_comments(content)').order('updated_at', { ascending: false }),
         ]);
 
         if (postsError) throw postsError;
@@ -130,16 +132,16 @@ function HomeContent() {
 
   return (
     <div className={styles.container}>
-      {activeTab === '메모' ? (
+      {activeTab === '진행기업' ? (
         <div className={styles.memoContent}>
           <div className={styles.memoHeader}>
-            <h1 className={styles.memoTitle}>메모</h1>
+            <h1 className={styles.memoTitle}>진행기업</h1>
             <button
               type="button"
               className={styles.createButton}
               onClick={() => router.push('/memos/new')}
             >
-              + 새 메모
+              + 새 기업
             </button>
           </div>
 
@@ -148,7 +150,7 @@ function HomeContent() {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="기업명, 대표자명, 제목, 작성자 검색..."
+              placeholder="기업명, 대표자명, 내용, 메모, 작성자 검색..."
               className={styles.searchInput}
             />
             {searchQuery && (
@@ -170,8 +172,10 @@ function HomeContent() {
               ? memos.filter((m) =>
                   (m.company_name || '').toLowerCase().includes(q) ||
                   (m.representative_name || '').toLowerCase().includes(q) ||
-                  m.title.toLowerCase().includes(q) ||
-                  (m.author || '').toLowerCase().includes(q)
+                  (m.title || '').toLowerCase().includes(q) ||
+                  (m.author || '').toLowerCase().includes(q) ||
+                  (m.content || '').toLowerCase().includes(q) ||
+                  (m.memo_comments || []).some((c) => (c.content || '').toLowerCase().includes(q))
                 )
               : memos;
 
@@ -179,7 +183,7 @@ function HomeContent() {
               return (
                 <div className={styles.emptyState}>
                   <p className={styles.emptyText}>
-                    {q ? '검색 결과가 없습니다' : '등록된 메모가 없습니다'}
+                    {q ? '검색 결과가 없습니다' : '등록된 기업이 없습니다'}
                   </p>
                 </div>
               );

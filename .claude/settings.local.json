@@ -15,7 +15,9 @@
       "Bash(npm run:*)",
       "Bash(git add:*)",
       "Bash(grep -n \"^export default function\" C:/Users/양태현/Desktop/test/plan/app/posts/\\\\[id\\\\]/page.tsx)",
-      "Bash(wc -l C:/Users/양태현/Desktop/test/plan/app/posts/\\\\[id\\\\]/page.tsx)"
+      "Bash(wc -l C:/Users/양태현/Desktop/test/plan/app/posts/\\\\[id\\\\]/page.tsx)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)"
     ]
   },
   "enableAllProjectMcpServers": false

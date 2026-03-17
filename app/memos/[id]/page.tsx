@@ -83,8 +83,8 @@ export default function MemoDetail() {
 
   const openDeleteModal = () => {
     setModalConfig({
-      title: '메모 삭제',
-      message: '이 메모를 삭제하시겠습니까? 삭제된 메모는 복구할 수 없습니다.',
+      title: '기업 삭제',
+      message: '이 기업을 삭제하시겠습니까? 삭제된 기업은 복구할 수 없습니다.',
       confirmText: '삭제',
       onConfirm: handleDelete,
       isDangerous: true,
@@ -97,10 +97,10 @@ export default function MemoDetail() {
       const { error } = await supabase.from('memos').delete().eq('id', memoId);
       if (error) throw error;
       setModalOpen(false);
-      router.push('/?tab=메모');
+      router.push('/?tab=진행기업');
     } catch (error) {
       console.error('Error deleting memo:', error);
-      alert('메모 삭제에 실패했습니다.');
+      alert('기업 삭제에 실패했습니다.');
     }
   };
 
@@ -122,7 +122,7 @@ export default function MemoDetail() {
       }
     } catch (error) {
       console.error('Error adding comment:', error);
-      alert('댓글 작성에 실패했습니다.');
+      alert('메모 작성에 실패했습니다.');
     }
   };
 
@@ -133,7 +133,7 @@ export default function MemoDetail() {
       setComments(comments.filter((c) => c.id !== commentId));
     } catch (error) {
       console.error('Error deleting comment:', error);
-      alert('댓글 삭제에 실패했습니다.');
+      alert('메모 삭제에 실패했습니다.');
     }
   };
 
@@ -166,14 +166,14 @@ export default function MemoDetail() {
       setEditModalOpen(false);
       setModalConfig({
         title: '수정 완료',
-        message: '메모가 수정되었습니다.',
+        message: '기업이 수정되었습니다.',
         confirmText: '확인',
-        onConfirm: () => router.push('/?tab=메모'),
+        onConfirm: () => router.push('/?tab=진행기업'),
       });
       setModalOpen(true);
     } catch (error) {
       console.error('Error updating memo:', error);
-      alert('메모 수정에 실패했습니다.');
+      alert('기업 수정에 실패했습니다.');
     }
   };
 
@@ -195,7 +195,7 @@ export default function MemoDetail() {
   if (!memo) {
     return (
       <div className={styles.notFound}>
-        <h2>메모를 찾을 수 없습니다</h2>
+        <h2>기업을 찾을 수 없습니다</h2>
         <Link href="/" className={styles.backButton}>← 목록으로 돌아가기</Link>
       </div>
     );
@@ -204,13 +204,13 @@ export default function MemoDetail() {
   return (
     <div className={styles.container}>
       <div className={styles.backButtons}>
-        <Link href="/?tab=메모" className={styles.backButton}>← 목록으로 돌아가기</Link>
-        <Link href="/?tab=메모" className={styles.backButton}>← 홈으로 돌아가기</Link>
+        <Link href="/?tab=진행기업" className={styles.backButton}>← 목록으로 돌아가기</Link>
+        <Link href="/?tab=진행기업" className={styles.backButton}>← 홈으로 돌아가기</Link>
       </div>
 
       <article className={styles.article}>
         <header className={styles.articleHeader}>
-          <h1 className={styles.title}>{memo.company_name || memo.representative_name || '메모'}</h1>
+          <h1 className={styles.title}>{memo.company_name || memo.representative_name || '진행기업'}</h1>
           <div className={styles.meta}>
             {memo.representative_name && (
               <>
@@ -239,12 +239,12 @@ export default function MemoDetail() {
         </div>
 
         <section className={styles.commentsSection}>
-          <h3 className={styles.commentsTitle}>댓글 ({comments.length})</h3>
+          <h3 className={styles.commentsTitle}>메모 ({comments.length})</h3>
           <div className={styles.commentForm}>
             <textarea
               value={newComment}
               onChange={(e) => setNewComment(e.target.value)}
-              placeholder="댓글을 입력하세요..."
+              placeholder="메모을 입력하세요..."
               className={styles.commentInput}
               rows={3}
             />
@@ -254,13 +254,13 @@ export default function MemoDetail() {
               disabled={!newComment.trim()}
               className={styles.commentSubmitButton}
             >
-              댓글 작성
+              메모 작성
             </button>
           </div>
 
           <div className={styles.commentsList}>
             {comments.length === 0 ? (
-              <p className={styles.noComments}>아직 댓글이 없습니다.</p>
+              <p className={styles.noComments}>아직 메모이 없습니다.</p>
             ) : (
               comments.map((comment) => (
                 <div key={comment.id} className={styles.commentItem}>

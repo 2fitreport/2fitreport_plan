@@ -47,10 +47,10 @@ export default function NewMemo() {
       ]);
       if (error) throw error;
       setModalOpen(false);
-      router.push('/?tab=메모');
+      router.push('/?tab=진행기업');
     } catch (error) {
       console.error('Error creating memo:', error);
-      alert('메모 등록에 실패했습니다.');
+      alert('기업 등록에 실패했습니다.');
       setIsSubmitting(false);
       setModalOpen(false);
     }
@@ -63,7 +63,7 @@ export default function NewMemo() {
       </button>
 
       <form className={styles.form} onSubmit={handleSubmit}>
-        <h1 className={styles.title}>새 메모 등록</h1>
+        <h1 className={styles.title}>새 기업 등록</h1>
 
         <div className={styles.formRow}>
           <div className={styles.formGroup}>
@@ -126,15 +126,15 @@ export default function NewMemo() {
             취소
           </button>
           <button type="submit" className={styles.submitButton} disabled={isSubmitting}>
-            {isSubmitting ? '등록 중...' : '메모 등록'}
+            {isSubmitting ? '등록 중...' : '기업 등록'}
           </button>
         </div>
       </form>
 
       <ConfirmModal
         isOpen={modalOpen}
-        title="메모 등록"
-        message={`다음 내용으로 메모를 등록하시겠습니까?
+        title="기업 등록"
+        message={`다음 내용으로 기업을 등록하시겠습니까?
 
 기업명: ${formData.company_name || '미지정'}
 대표자명: ${formData.representative_name || '미지정'}

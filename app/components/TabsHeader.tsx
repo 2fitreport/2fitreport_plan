@@ -11,10 +11,10 @@ function TabsHeaderContent() {
   const router = useRouter();
 
   const getActiveTab = () => {
-    if (pathname.startsWith('/memos')) return '메모';
+    if (pathname.startsWith('/memos')) return '진행기업';
     if (pathname === '/' && searchParams.get('tab') === '회의') return '회의';
     if (pathname === '/' && searchParams.get('tab') === '일정') return '일정';
-    if (pathname === '/' && (!searchParams.get('tab') || searchParams.get('tab') === '메모')) return '메모';
+    if (pathname === '/' && (!searchParams.get('tab') || searchParams.get('tab') === '진행기업')) return '진행기업';
     if (pathname.startsWith('/meetings')) return '회의';
     if (searchParams.get('type') === 'meeting') return '회의';
     return '일정';
@@ -26,10 +26,10 @@ function TabsHeaderContent() {
     <nav className={styles.tabs}>
       <button
         type="button"
-        className={`${styles.tab} ${activeTab === '메모' ? styles.active : ''}`}
-        onClick={() => router.push('/?tab=메모')}
+        className={`${styles.tab} ${activeTab === '진행기업' ? styles.active : ''}`}
+        onClick={() => router.push('/?tab=진행기업')}
       >
-        메모
+        진행기업
       </button>
       <button
         type="button"
