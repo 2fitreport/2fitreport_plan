@@ -11,7 +11,6 @@ export default function NewMemo() {
   const [formData, setFormData] = useState({
     company_name: '',
     representative_name: '',
-    title: '',
     author: '',
     content: '',
   });
@@ -41,14 +40,14 @@ export default function NewMemo() {
         {
           company_name: formData.company_name,
           representative_name: formData.representative_name,
-          title: formData.title,
+          title: '',
           author: formData.author,
           content: formData.content,
         },
       ]);
       if (error) throw error;
       setModalOpen(false);
-      router.push('/');
+      router.push('/?tab=메모');
     } catch (error) {
       console.error('Error creating memo:', error);
       alert('메모 등록에 실패했습니다.');
@@ -94,22 +93,6 @@ export default function NewMemo() {
         </div>
 
         <div className={styles.formGroup}>
-          <label htmlFor="title" className={styles.label}>
-            제목 <span className={styles.required}>*</span>
-          </label>
-          <input
-            type="text"
-            id="title"
-            name="title"
-            value={formData.title}
-            onChange={handleInputChange}
-            placeholder="메모 제목을 입력하세요"
-            required
-            className={styles.input}
-          />
-        </div>
-
-        <div className={styles.formGroup}>
           <label htmlFor="author" className={styles.label}>작성자</label>
           <input
             type="text"
@@ -124,7 +107,7 @@ export default function NewMemo() {
 
         <div className={styles.formGroup}>
           <label htmlFor="content" className={styles.label}>
-            내용 <span className={styles.required}>*</span>
+            상담내용 및 자금계획 <span className={styles.required}>*</span>
           </label>
           <textarea
             id="content"
@@ -155,7 +138,6 @@ export default function NewMemo() {
 
 기업명: ${formData.company_name || '미지정'}
 대표자명: ${formData.representative_name || '미지정'}
-제목: ${formData.title}
 작성자: ${formData.author || '미지정'}`}
         confirmText="등록"
         cancelText="취소"

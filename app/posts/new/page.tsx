@@ -73,7 +73,7 @@ function NewPostForm() {
       if (error) throw error;
 
       setModalOpen(false);
-      router.push('/');
+      router.push('/?tab=일정');
     } catch (error) {
       console.error('Error creating item:', error);
       const itemType = isMeeting ? '회의' : '일정';

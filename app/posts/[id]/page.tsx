@@ -254,7 +254,7 @@ function PostDetailContent() {
       if (error) throw error;
       setPost({ ...post, status: newStatus });
       setModalOpen(false);
-      router.push('/');
+      router.push(isMeeting ? '/?tab=회의' : '/?tab=일정');
     } catch (error) {
       console.error('Error updating status:', error);
       alert('상태 변경에 실패했습니다.');
@@ -282,7 +282,7 @@ function PostDetailContent() {
 
       if (error) throw error;
       setModalOpen(false);
-      router.push('/');
+      router.push(isMeeting ? '/?tab=회의' : '/?tab=일정');
     } catch (error) {
       console.error('Error deleting item:', error);
       const itemType = isMeeting ? '회의' : '일정';
@@ -380,7 +380,7 @@ function PostDetailContent() {
         title: '수정 완료',
         message: '글이 수정되었습니다.',
         confirmText: '확인',
-        onConfirm: () => router.push('/'),
+        onConfirm: () => router.push(isMeeting ? '/?tab=회의' : '/?tab=일정'),
       });
       setModalOpen(true);
     } catch (error) {

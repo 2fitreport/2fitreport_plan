@@ -97,7 +97,7 @@ export default function MemoDetail() {
       const { error } = await supabase.from('memos').delete().eq('id', memoId);
       if (error) throw error;
       setModalOpen(false);
-      router.push('/');
+      router.push('/?tab=메모');
     } catch (error) {
       console.error('Error deleting memo:', error);
       alert('메모 삭제에 실패했습니다.');
@@ -112,6 +112,10 @@ export default function MemoDetail() {
         .insert([{ memo_id: memoId, content: newComment }])
         .select();
       if (error) throw error;
+      await supabase
+        .from('memos')
+        .update({ updated_at: new Date().toISOString() })
+        .eq('id', memoId);
       if (data) {
         setComments([data[0], ...comments]);
         setNewComment('');
@@ -136,7 +140,6 @@ export default function MemoDetail() {
   const handleEditSave = async (
     newCompanyName: string,
     newRepresentativeName: string,
-    newTitle: string,
     newAuthor: string,
     newContent: string
   ) => {
@@ -147,9 +150,9 @@ export default function MemoDetail() {
         .update({
           company_name: newCompanyName,
           representative_name: newRepresentativeName,
-          title: newTitle,
           author: newAuthor,
           content: newContent,
+          updated_at: new Date().toISOString(),
         })
         .eq('id', memoId);
       if (error) throw error;
@@ -157,7 +160,6 @@ export default function MemoDetail() {
         ...memo,
         company_name: newCompanyName,
         representative_name: newRepresentativeName,
-        title: newTitle,
         author: newAuthor,
         content: newContent,
       });
@@ -166,7 +168,7 @@ export default function MemoDetail() {
         title: '수정 완료',
         message: '메모가 수정되었습니다.',
         confirmText: '확인',
-        onConfirm: () => router.push('/'),
+        onConfirm: () => router.push('/?tab=메모'),
       });
       setModalOpen(true);
     } catch (error) {
@@ -208,7 +210,7 @@ export default function MemoDetail() {
 
       <article className={styles.article}>
         <header className={styles.articleHeader}>
-          <h1 className={styles.title}>{memo.title}</h1>
+          <h1 className={styles.title}>{memo.company_name || memo.representative_name || '메모'}</h1>
           <div className={styles.meta}>
             {memo.company_name && (
               <>
@@ -317,7 +319,6 @@ export default function MemoDetail() {
         isOpen={editModalOpen}
         companyName={memo.company_name || ''}
         representativeName={memo.representative_name || ''}
-        title={memo.title}
         author={memo.author || ''}
         content={memo.content || ''}
         onSave={handleEditSave}

@@ -33,6 +33,15 @@ function HomeContent() {
     tabParam === '일정' || tabParam === '회의' ? tabParam : '메모'
   );
   const [searchQuery, setSearchQuery] = useState('');
+
+  useEffect(() => {
+    const tab = searchParams.get('tab');
+    if (tab === '일정' || tab === '회의') {
+      setActiveTab(tab);
+    } else {
+      setActiveTab('메모');
+    }
+  }, [searchParams]);
   const [posts, setPosts] = useState<any[]>([]);
   const [meetings, setMeetings] = useState<any[]>([]);
   const [memos, setMemos] = useState<Memo[]>([]);
@@ -48,7 +57,7 @@ function HomeContent() {
         ] = await Promise.all([
           supabase.from('posts').select('*').order('created_at', { ascending: false }),
           supabase.from('meetings').select('*').order('created_at', { ascending: false }),
-          supabase.from('memos').select('*').order('created_at', { ascending: false }),
+          supabase.from('memos').select('*').order('updated_at', { ascending: false }),
         ]);
 
         if (postsError) throw postsError;
@@ -121,30 +130,6 @@ function HomeContent() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.tabs}>
-        <button
-          type="button"
-          className={`${styles.tab} ${activeTab === '메모' ? styles.active : ''}`}
-          onClick={() => setActiveTab('메모')}
-        >
-          메모
-        </button>
-        <button
-          type="button"
-          className={`${styles.tab} ${activeTab === '일정' ? styles.active : ''}`}
-          onClick={() => setActiveTab('일정')}
-        >
-          일정
-        </button>
-        <button
-          type="button"
-          className={`${styles.tab} ${activeTab === '회의' ? styles.active : ''}`}
-          onClick={() => setActiveTab('회의')}
-        >
-          회의
-        </button>
-      </div>
-
       {activeTab === '메모' ? (
         <div className={styles.memoContent}>
           <div className={styles.memoHeader}>
@@ -201,39 +186,16 @@ function HomeContent() {
             }
 
             return (
-              <div className={styles.memoTableWrapper}>
-              <table className={styles.memoTable}>
-                <thead>
-                  <tr>
-                    <th className={styles.companyCol}>기업명</th>
-                    <th className={styles.repCol}>대표자명</th>
-                    <th className={styles.memoTitleCol}>제목</th>
-                    <th className={styles.authorCol}>작성자</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filtered.map((memo) => (
-                    <tr
-                      key={memo.id}
-                      className={styles.tableRow}
-                      onClick={() => router.push(`/memos/${memo.id}`)}
-                    >
-                      <td className={styles.companyCol}>
-                        <div className={styles.cellText}>{memo.company_name || '-'}</div>
-                      </td>
-                      <td className={styles.repCol}>
-                        <div className={styles.cellText}>{memo.representative_name || '-'}</div>
-                      </td>
-                      <td className={styles.memoTitleCol}>
-                        <div className={styles.titleCell}>{memo.title}</div>
-                      </td>
-                      <td className={styles.authorCol}>
-                        <div className={styles.cellText}>{memo.author || '미지정'}</div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+              <div className={styles.memoList}>
+                {filtered.map((memo) => (
+                  <div
+                    key={memo.id}
+                    className={styles.memoItem}
+                    onClick={() => router.push(`/memos/${memo.id}`)}
+                  >
+                    {memo.company_name || '-'}
+                  </div>
+                ))}
               </div>
             );
           })()}

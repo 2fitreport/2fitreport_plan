@@ -65,7 +65,7 @@ export default function NewMeeting() {
       if (error) throw error;
 
       setModalOpen(false);
-      router.push('/');
+      router.push('/?tab=회의');
     } catch (error) {
       console.error('Error creating meeting:', error);
       alert('회의 등록에 실패했습니다.');
