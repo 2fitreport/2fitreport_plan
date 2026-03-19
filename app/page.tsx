@@ -63,8 +63,8 @@ function HomeContent() {
           { data: meetingsData, error: meetingsError },
           { data: memosData, error: memosError },
         ] = await Promise.all([
-          supabase.from('posts').select('*').order('created_at', { ascending: false }),
-          supabase.from('meetings').select('*').order('created_at', { ascending: false }),
+          supabase.from('posts').select('*').order('created_at', { ascending: true }),
+          supabase.from('meetings').select('*').order('created_at', { ascending: true }),
           supabase.from('memos').select('*, memo_comments(content)').order('updated_at', { ascending: false }),
         ]);
 
