@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import styles from './page.module.css';
 import { supabase } from '@/lib/supabase';
 import ConfirmModal from '@/app/components/ConfirmModal';
+import PasswordModal, { checkAuth } from '@/app/components/PasswordModal';
 
 function NewPostForm() {
   const router = useRouter();
@@ -22,6 +23,16 @@ function NewPostForm() {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const [authed, setAuthed] = useState(false);
+  const [showPasswordModal, setShowPasswordModal] = useState(false);
+
+  useEffect(() => {
+    if (checkAuth()) {
+      setAuthed(true);
+    } else {
+      setShowPasswordModal(true);
+    }
+  }, []);
 
   useEffect(() => {
     const savedAuthor = localStorage.getItem('author') || '';
@@ -82,6 +93,15 @@ function NewPostForm() {
       setModalOpen(false);
     }
   };
+
+  if (!authed) {
+    return showPasswordModal ? (
+      <PasswordModal
+        onSuccess={() => { setAuthed(true); setShowPasswordModal(false); }}
+        onCancel={() => router.push('/?tab=진행기업')}
+      />
+    ) : null;
+  }
 
   return (
     <div className={styles.container}>

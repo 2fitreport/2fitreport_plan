@@ -5,6 +5,7 @@ import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import styles from './page.module.css';
 import { supabase } from '@/lib/supabase';
+import PasswordModal, { checkAuth } from '@/app/components/PasswordModal';
 
 interface Post {
   id: string;
@@ -31,6 +32,16 @@ function DatePostsContent() {
 
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
+  const [authed, setAuthed] = useState(false);
+  const [showPasswordModal, setShowPasswordModal] = useState(false);
+
+  useEffect(() => {
+    if (checkAuth()) {
+      setAuthed(true);
+    } else {
+      setShowPasswordModal(true);
+    }
+  }, []);
 
   const dateString = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
 
@@ -93,6 +104,15 @@ function DatePostsContent() {
 
     fetchPosts();
   }, [dateString, isMeeting]);
+
+  if (!authed) {
+    return showPasswordModal ? (
+      <PasswordModal
+        onSuccess={() => { setAuthed(true); setShowPasswordModal(false); }}
+        onCancel={() => router.push('/?tab=진행기업')}
+      />
+    ) : null;
+  }
 
   return (
     <div className={styles.container}>

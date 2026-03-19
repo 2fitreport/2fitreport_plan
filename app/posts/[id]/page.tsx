@@ -7,6 +7,7 @@ import styles from './page.module.css';
 import { supabase } from '@/lib/supabase';
 import ConfirmModal from '@/app/components/ConfirmModal';
 import EditModal from '@/app/components/EditModal';
+import PasswordModal, { checkAuth } from '@/app/components/PasswordModal';
 
 interface PostData {
   id: string;
@@ -162,9 +163,19 @@ function PostDetailContent() {
   const searchParams = useSearchParams();
   const postId = params?.id as string;
   const isMeeting = searchParams.get('type') === 'meeting';
+  const [authed, setAuthed] = useState(false);
+  const [showPasswordModal, setShowPasswordModal] = useState(false);
   const [post, setPost] = useState<PostData | null>(null);
   const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
+
+  useEffect(() => {
+    if (checkAuth()) {
+      setAuthed(true);
+    } else {
+      setShowPasswordModal(true);
+    }
+  }, []);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState('');
@@ -388,6 +399,15 @@ function PostDetailContent() {
       alert('글 수정에 실패했습니다.');
     }
   };
+
+  if (!authed) {
+    return showPasswordModal ? (
+      <PasswordModal
+        onSuccess={() => { setAuthed(true); setShowPasswordModal(false); }}
+        onCancel={() => router.push('/?tab=진행기업')}
+      />
+    ) : null;
+  }
 
   if (loading) {
     return (

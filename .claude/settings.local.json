@@ -17,7 +17,14 @@
       "Bash(grep -n \"^export default function\" C:/Users/양태현/Desktop/test/plan/app/posts/\\\\[id\\\\]/page.tsx)",
       "Bash(wc -l C:/Users/양태현/Desktop/test/plan/app/posts/\\\\[id\\\\]/page.tsx)",
       "Bash(git commit:*)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "Read(//c/Users/양태현/.ssh/**)",
+      "Bash(ssh:*)",
+      "Bash(ssh-keyscan -H github.com)",
+      "Bash(tee -a ~/.ssh/known_hosts)",
+      "Bash(git config:*)",
+      "Bash(where ssh:*)",
+      "Bash(GIT_SSH_COMMAND='ssh -v' git ls-remote git@github.com:2fitreport/2fitreport_plan.git)"
     ]
   },
   "enableAllProjectMcpServers": false

@@ -131,10 +131,22 @@ export default function MemoDetail() {
       const { error } = await supabase.from('memo_comments').delete().eq('id', commentId);
       if (error) throw error;
       setComments(comments.filter((c) => c.id !== commentId));
+      setModalOpen(false);
     } catch (error) {
       console.error('Error deleting comment:', error);
       alert('메모 삭제에 실패했습니다.');
     }
+  };
+
+  const openDeleteCommentModal = (commentId: string) => {
+    setModalConfig({
+      title: '메모 삭제',
+      message: '이 메모를 삭제하시겠습니까?',
+      confirmText: '삭제',
+      onConfirm: () => handleDeleteComment(commentId),
+      isDangerous: true,
+    });
+    setModalOpen(true);
   };
 
   const handleEditSave = async (
@@ -205,7 +217,6 @@ export default function MemoDetail() {
     <div className={styles.container}>
       <div className={styles.backButtons}>
         <Link href="/?tab=진행기업" className={styles.backButton}>← 목록으로 돌아가기</Link>
-        <Link href="/?tab=진행기업" className={styles.backButton}>← 홈으로 돌아가기</Link>
       </div>
 
       <article className={styles.article}>
@@ -276,7 +287,7 @@ export default function MemoDetail() {
                     </span>
                     <button
                       type="button"
-                      onClick={() => handleDeleteComment(comment.id)}
+                      onClick={() => openDeleteCommentModal(comment.id)}
                       className={styles.commentDeleteButton}
                     >
                       삭제

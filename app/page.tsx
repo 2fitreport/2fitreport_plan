@@ -6,6 +6,7 @@ import styles from './page.module.css';
 import { SelectedDate } from '@/app/types';
 import { supabase } from '@/lib/supabase';
 import { useRouter, useSearchParams } from 'next/navigation';
+import PasswordModal, { checkAuth } from '@/app/components/PasswordModal';
 
 type TabType = '진행기업' | '일정' | '회의';
 
@@ -17,6 +18,7 @@ interface Memo {
   author: string;
   content: string;
   created_at: string;
+  updated_at: string;
   memo_comments: { content: string }[];
 }
 
@@ -30,16 +32,20 @@ function HomeContent() {
     date: today.getDate(),
   });
 
-  const tabParam = searchParams.get('tab');
-  const [activeTab, setActiveTab] = useState<TabType>(
-    tabParam === '일정' || tabParam === '회의' ? tabParam : '진행기업'
-  );
+  const [activeTab, setActiveTab] = useState<TabType>('진행기업');
   const [searchQuery, setSearchQuery] = useState('');
+  const [showPasswordModal, setShowPasswordModal] = useState(false);
+  const [pendingTab, setPendingTab] = useState<'일정' | '회의' | null>(null);
 
   useEffect(() => {
     const tab = searchParams.get('tab');
     if (tab === '일정' || tab === '회의') {
-      setActiveTab(tab);
+      if (checkAuth()) {
+        setActiveTab(tab);
+      } else {
+        setPendingTab(tab);
+        setShowPasswordModal(true);
+      }
     } else {
       setActiveTab('진행기업');
     }
@@ -130,8 +136,25 @@ function HomeContent() {
     });
   };
 
+  const handleAuthSuccess = () => {
+    setShowPasswordModal(false);
+    if (pendingTab) {
+      setActiveTab(pendingTab);
+      setPendingTab(null);
+    }
+  };
+
+  const handleAuthCancel = () => {
+    setShowPasswordModal(false);
+    setPendingTab(null);
+    router.push('/?tab=진행기업');
+  };
+
   return (
     <div className={styles.container}>
+      {showPasswordModal && (
+        <PasswordModal onSuccess={handleAuthSuccess} onCancel={handleAuthCancel} />
+      )}
       {activeTab === '진행기업' ? (
         <div className={styles.memoContent}>
           <div className={styles.memoHeader}>
@@ -198,6 +221,14 @@ function HomeContent() {
                     onClick={() => router.push(`/memos/${memo.id}`)}
                   >
                     {memo.company_name || '-'}
+                    <span className={styles.memoItemTime}>
+                      {new Date(memo.updated_at || memo.created_at).toLocaleString('ko-KR', {
+                        month: '2-digit',
+                        day: '2-digit',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                      })}
+                    </span>
                   </div>
                 ))}
               </div>
