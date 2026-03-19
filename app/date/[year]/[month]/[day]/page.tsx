@@ -75,7 +75,7 @@ function DatePostsContent() {
           .select('*')
           .lte('start_date', dateString)
           .gte('end_date', dateString)
-          .order('created_at', { ascending: false });
+          .order('created_at', { ascending: true });
 
         if (error) throw error;
 
