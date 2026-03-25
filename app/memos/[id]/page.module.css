@@ -331,43 +331,43 @@
   }
 
   .meta {
-    font-size: 19px;
+    font-size: 17px;
   }
 
   .metaBadge {
-    font-size: 18px;
+    font-size: 16px;
   }
 
   .author {
-    font-size: 19px;
+    font-size: 17px;
   }
 
   .phoneLink {
-    font-size: 19px;
+    font-size: 17px;
   }
 
   .content {
-    font-size: 26px;
+    font-size: 23px;
   }
 
   .commentContent {
-    font-size: 24px;
+    font-size: 21px;
   }
 
   .commentDate {
-    font-size: 18px;
+    font-size: 16px;
   }
 
   .commentDeleteButton {
-    font-size: 18px;
+    font-size: 16px;
   }
 
   .commentsTitle {
-    font-size: 22px;
+    font-size: 20px;
   }
 
   .commentInput {
-    font-size: 24px;
+    font-size: 21px;
   }
 
   .actions {
@@ -408,7 +408,7 @@
   }
 
   .metaBadge {
-    font-size: 17px;
+    font-size: 16px;
     padding: 3px 8px;
   }
 
@@ -417,7 +417,7 @@
   }
 
   .content {
-    font-size: 24px;
+    font-size: 22px;
   }
 
   .footer {
@@ -453,15 +453,15 @@
   }
 
   .commentContent {
-    font-size: 23px;
+    font-size: 20px;
   }
 
   .commentDate {
-    font-size: 18px;
+    font-size: 16px;
   }
 
   .commentDeleteButton {
-    font-size: 18px;
+    font-size: 16px;
   }
 
   .commentsTitle {
@@ -469,7 +469,7 @@
   }
 
   .commentInput {
-    font-size: 23px;
+    font-size: 20px;
   }
 }
 

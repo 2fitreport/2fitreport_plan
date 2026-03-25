@@ -235,14 +235,7 @@ export default function MemoDetail() {
             )}
             {memo.phone && (
               <>
-                <span
-                  className={styles.phoneLink}
-                  style={{ cursor: 'pointer' }}
-                  onClick={() => {
-                    const tel = memo.phone.replace(/-/g, '');
-                    window.location.href = `tel:${tel}`;
-                  }}
-                >{memo.phone}</span>
+                <a href={`tel:${memo.phone}`} className={styles.phoneLink}>{memo.phone}</a>
                 <span className={styles.separator}>•</span>
               </>
             )}
