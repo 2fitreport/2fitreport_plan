@@ -7,9 +7,10 @@ interface MemoEditModalProps {
   isOpen: boolean;
   companyName: string;
   representativeName: string;
+  phone: string;
   author: string;
   content: string;
-  onSave: (companyName: string, representativeName: string, author: string, content: string) => void;
+  onSave: (companyName: string, representativeName: string, phone: string, author: string, content: string) => void;
   onCancel: () => void;
 }
 
@@ -17,6 +18,7 @@ export default function MemoEditModal({
   isOpen,
   companyName: initialCompanyName,
   representativeName: initialRepresentativeName,
+  phone: initialPhone,
   author: initialAuthor,
   content: initialContent,
   onSave,
@@ -24,6 +26,13 @@ export default function MemoEditModal({
 }: MemoEditModalProps) {
   const [companyName, setCompanyName] = useState(initialCompanyName);
   const [representativeName, setRepresentativeName] = useState(initialRepresentativeName);
+  const formatPhone = (value: string) => {
+    const nums = value.replace(/[^0-9]/g, '');
+    if (nums.length <= 3) return nums;
+    if (nums.length <= 7) return `${nums.slice(0, 3)}-${nums.slice(3)}`;
+    return `${nums.slice(0, 3)}-${nums.slice(3, 7)}-${nums.slice(7, 11)}`;
+  };
+  const [phone, setPhone] = useState(initialPhone);
   const [author, setAuthor] = useState(initialAuthor);
   const [content, setContent] = useState(initialContent);
 
@@ -62,6 +71,18 @@ export default function MemoEditModal({
           </div>
 
           <div className={styles.formGroup}>
+            <label className={styles.label}>전화번호</label>
+            <input
+              type="tel"
+              value={phone}
+              onChange={(e) => setPhone(formatPhone(e.target.value))}
+              className={styles.input}
+              placeholder="전화번호를 입력하세요"
+              maxLength={13}
+            />
+          </div>
+
+          <div className={styles.formGroup}>
             <label className={styles.label}>작성자</label>
             <input
               type="text"
@@ -88,7 +109,7 @@ export default function MemoEditModal({
           <button type="button" onClick={onCancel} className={styles.cancelButton}>취소</button>
           <button
             type="button"
-            onClick={() => onSave(companyName, representativeName, author, content)}
+            onClick={() => onSave(companyName, representativeName, phone, author, content)}
             className={styles.saveButton}
           >
             저장

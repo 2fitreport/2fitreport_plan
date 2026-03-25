@@ -12,6 +12,7 @@ interface MemoData {
   id: string;
   company_name: string;
   representative_name: string;
+  phone: string;
   title: string;
   content: string;
   author: string;
@@ -152,6 +153,7 @@ export default function MemoDetail() {
   const handleEditSave = async (
     newCompanyName: string,
     newRepresentativeName: string,
+    newPhone: string,
     newAuthor: string,
     newContent: string
   ) => {
@@ -162,6 +164,7 @@ export default function MemoDetail() {
         .update({
           company_name: newCompanyName,
           representative_name: newRepresentativeName,
+          phone: newPhone,
           author: newAuthor,
           content: newContent,
           updated_at: new Date().toISOString(),
@@ -172,6 +175,7 @@ export default function MemoDetail() {
         ...memo,
         company_name: newCompanyName,
         representative_name: newRepresentativeName,
+        phone: newPhone,
         author: newAuthor,
         content: newContent,
       });
@@ -226,6 +230,12 @@ export default function MemoDetail() {
             {memo.representative_name && (
               <>
                 <span className={styles.metaBadge}>{memo.representative_name} 대표님</span>
+                <span className={styles.separator}>•</span>
+              </>
+            )}
+            {memo.phone && (
+              <>
+                <a href={`tel:${memo.phone}`} className={styles.phoneLink}>{memo.phone}</a>
                 <span className={styles.separator}>•</span>
               </>
             )}
@@ -324,6 +334,7 @@ export default function MemoDetail() {
         isOpen={editModalOpen}
         companyName={memo.company_name || ''}
         representativeName={memo.representative_name || ''}
+        phone={memo.phone || ''}
         author={memo.author || ''}
         content={memo.content || ''}
         onSave={handleEditSave}

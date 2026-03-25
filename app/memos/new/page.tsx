@@ -11,6 +11,7 @@ export default function NewMemo() {
   const [formData, setFormData] = useState({
     company_name: '',
     representative_name: '',
+    phone: '',
     author: '',
     content: '',
   });
@@ -22,8 +23,19 @@ export default function NewMemo() {
     setFormData((prev) => ({ ...prev, author: savedAuthor }));
   }, []);
 
+  const formatPhone = (value: string) => {
+    const nums = value.replace(/[^0-9]/g, '');
+    if (nums.length <= 3) return nums;
+    if (nums.length <= 7) return `${nums.slice(0, 3)}-${nums.slice(3)}`;
+    return `${nums.slice(0, 3)}-${nums.slice(3, 7)}-${nums.slice(7, 11)}`;
+  };
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
+    if (name === 'phone') {
+      setFormData((prev) => ({ ...prev, phone: formatPhone(value) }));
+      return;
+    }
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -40,6 +52,7 @@ export default function NewMemo() {
         {
           company_name: formData.company_name,
           representative_name: formData.representative_name,
+          phone: formData.phone,
           title: '',
           author: formData.author,
           content: formData.content,
@@ -90,6 +103,20 @@ export default function NewMemo() {
               className={styles.input}
             />
           </div>
+        </div>
+
+        <div className={styles.formGroup}>
+          <label htmlFor="phone" className={styles.label}>전화번호</label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            value={formData.phone}
+            onChange={handleInputChange}
+            placeholder="전화번호를 입력하세요"
+            maxLength={13}
+            className={styles.input}
+          />
         </div>
 
         <div className={styles.formGroup}>

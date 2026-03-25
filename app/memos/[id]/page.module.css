@@ -92,6 +92,17 @@
   font-weight: 600;
 }
 
+.phoneLink {
+  color: #5b6dea;
+  font-weight: 600;
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.phoneLink:hover {
+  text-decoration: underline;
+}
+
 .date {
   font-weight: 500;
   color: #6f6e77;
@@ -331,6 +342,10 @@
     font-size: 19px;
   }
 
+  .phoneLink {
+    font-size: 19px;
+  }
+
   .content {
     font-size: 26px;
   }
@@ -395,6 +410,10 @@
   .metaBadge {
     font-size: 17px;
     padding: 3px 8px;
+  }
+
+  .phoneLink {
+    font-size: 17px;
   }
 
   .content {
